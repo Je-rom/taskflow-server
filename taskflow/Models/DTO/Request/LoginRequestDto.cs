@@ -7,7 +7,7 @@ namespace taskflow.Models.DTO.Request
         [Required]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+        public string Username { get; set; }
         
         [Required]
         [DataType(DataType.Password)]

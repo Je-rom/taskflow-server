@@ -162,7 +162,7 @@ namespace taskflow.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workspace",
+                name: "Workspaces",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -174,16 +174,16 @@ namespace taskflow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workspace", x => x.Id);
+                    table.PrimaryKey("PK_Workspaces", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Workspace_AspNetUsers_UserId",
+                        name: "FK_Workspaces_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Project",
+                name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -197,17 +197,17 @@ namespace taskflow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Project", x => x.Id);
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Project_Workspace_WorkspaceId",
+                        name: "FK_Projects_Workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
-                        principalTable: "Workspace",
+                        principalTable: "Workspaces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkspaceMember",
+                name: "WorkspaceMembers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -217,22 +217,22 @@ namespace taskflow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkspaceMember", x => x.Id);
+                    table.PrimaryKey("PK_WorkspaceMembers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkspaceMember_AspNetUsers_UserId",
+                        name: "FK_WorkspaceMembers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_WorkspaceMember_Workspace_WorkspaceId",
+                        name: "FK_WorkspaceMembers_Workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
-                        principalTable: "Workspace",
+                        principalTable: "Workspaces",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectMember",
+                name: "ProjectMembers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -243,27 +243,27 @@ namespace taskflow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectMember", x => x.Id);
+                    table.PrimaryKey("PK_ProjectMembers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectMember_AspNetUsers_UserId",
+                        name: "FK_ProjectMembers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ProjectMember_Project_ProjectId",
+                        name: "FK_ProjectMembers_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProjectMember_WorkspaceMember_WorkspaceMemberId",
+                        name: "FK_ProjectMembers_WorkspaceMembers_WorkspaceMemberId",
                         column: x => x.WorkspaceMemberId,
-                        principalTable: "WorkspaceMember",
+                        principalTable: "WorkspaceMembers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectTask",
+                name: "ProjectTasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -279,17 +279,17 @@ namespace taskflow.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectTask", x => x.Id);
+                    table.PrimaryKey("PK_ProjectTasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectTask_ProjectMember_ProjectMemberId",
+                        name: "FK_ProjectTasks_ProjectMembers_ProjectMemberId",
                         column: x => x.ProjectMemberId,
-                        principalTable: "ProjectMember",
+                        principalTable: "ProjectMembers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProjectTask_Project_ProjectId",
+                        name: "FK_ProjectTasks_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalTable: "Project",
+                        principalTable: "Projects",
                         principalColumn: "Id");
                 });
 
@@ -333,49 +333,49 @@ namespace taskflow.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Project_WorkspaceId",
-                table: "Project",
-                column: "WorkspaceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectMember_ProjectId",
-                table: "ProjectMember",
+                name: "IX_ProjectMembers_ProjectId",
+                table: "ProjectMembers",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectMember_UserId",
-                table: "ProjectMember",
+                name: "IX_ProjectMembers_UserId",
+                table: "ProjectMembers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectMember_WorkspaceMemberId",
-                table: "ProjectMember",
+                name: "IX_ProjectMembers_WorkspaceMemberId",
+                table: "ProjectMembers",
                 column: "WorkspaceMemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectTask_ProjectId",
-                table: "ProjectTask",
+                name: "IX_Projects_WorkspaceId",
+                table: "Projects",
+                column: "WorkspaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectTasks_ProjectId",
+                table: "ProjectTasks",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectTask_ProjectMemberId",
-                table: "ProjectTask",
+                name: "IX_ProjectTasks_ProjectMemberId",
+                table: "ProjectTasks",
                 column: "ProjectMemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workspace_UserId",
-                table: "Workspace",
+                name: "IX_WorkspaceMembers_UserId",
+                table: "WorkspaceMembers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkspaceMember_UserId",
-                table: "WorkspaceMember",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkspaceMember_WorkspaceId",
-                table: "WorkspaceMember",
+                name: "IX_WorkspaceMembers_WorkspaceId",
+                table: "WorkspaceMembers",
                 column: "WorkspaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Workspaces_UserId",
+                table: "Workspaces",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -397,22 +397,22 @@ namespace taskflow.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ProjectTask");
+                name: "ProjectTasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ProjectMember");
+                name: "ProjectMembers");
 
             migrationBuilder.DropTable(
-                name: "Project");
+                name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "WorkspaceMember");
+                name: "WorkspaceMembers");
 
             migrationBuilder.DropTable(
-                name: "Workspace");
+                name: "Workspaces");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

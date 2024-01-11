@@ -186,7 +186,7 @@ namespace taskflow.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("taskflow.Models.Domain.ProjectMember", b =>
@@ -215,7 +215,7 @@ namespace taskflow.Migrations
 
                     b.HasIndex("WorkspaceMemberId");
 
-                    b.ToTable("ProjectMember");
+                    b.ToTable("ProjectMembers");
                 });
 
             modelBuilder.Entity("taskflow.Models.Domain.ProjectTask", b =>
@@ -257,7 +257,7 @@ namespace taskflow.Migrations
 
                     b.HasIndex("ProjectMemberId");
 
-                    b.ToTable("ProjectTask");
+                    b.ToTable("ProjectTasks");
                 });
 
             modelBuilder.Entity("taskflow.Models.Domain.User", b =>
@@ -365,7 +365,7 @@ namespace taskflow.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Workspace");
+                    b.ToTable("Workspaces");
                 });
 
             modelBuilder.Entity("taskflow.Models.Domain.WorkspaceMember", b =>
@@ -389,7 +389,7 @@ namespace taskflow.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("WorkspaceMember");
+                    b.ToTable("WorkspaceMembers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

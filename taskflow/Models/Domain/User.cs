@@ -17,7 +17,7 @@ public class User : IdentityUser
     public ICollection<ProjectMember> ProjectMembers { get; set; }
 
     // Constructor to set default values
-    /*public ApplicationUser()
+    public User()
     {
         CreatedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
@@ -27,6 +27,6 @@ public class User : IdentityUser
     public void UpdateUpdatedAt()
     {
         UpdatedAt = DateTime.UtcNow;
-    }*/
+    }
     
 }
