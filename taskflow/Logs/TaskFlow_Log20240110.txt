@@ -1,0 +1,102 @@
+2024-01-10 13:17:54.981 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:17:55.268 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:18:57.034 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:19:19.119 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:19:20.765 +01:00 [ERR] Failed executing DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkspaceMember] (
+    [Id] uniqueidentifier NOT NULL,
+    [ApplicationUserid] uniqueidentifier NOT NULL,
+    [ApplicationUserId] nvarchar(450) NULL,
+    [WorkspaceId] uniqueidentifier NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkspaceMember] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkspaceMember_AspNetUsers_ApplicationUserId] FOREIGN KEY ([ApplicationUserId]) REFERENCES [AspNetUsers] ([Id]),
+    CONSTRAINT [FK_WorkspaceMember_Workspace_WorkspaceId] FOREIGN KEY ([WorkspaceId]) REFERENCES [Workspace] ([Id]) ON DELETE CASCADE
+);
+2024-01-10 13:21:25.320 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:21:25.522 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:22:28.429 +01:00 [ERR] Failed executing DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkspaceMember] (
+    [Id] uniqueidentifier NOT NULL,
+    [ApplicationUserid] uniqueidentifier NOT NULL,
+    [ApplicationUserId] nvarchar(450) NULL,
+    [WorkspaceId] uniqueidentifier NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkspaceMember] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkspaceMember_AspNetUsers_ApplicationUserId] FOREIGN KEY ([ApplicationUserId]) REFERENCES [AspNetUsers] ([Id]),
+    CONSTRAINT [FK_WorkspaceMember_Workspace_WorkspaceId] FOREIGN KEY ([WorkspaceId]) REFERENCES [Workspace] ([Id]) ON DELETE CASCADE
+);
+2024-01-10 13:23:41.283 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:23:41.511 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:26:03.794 +01:00 [ERR] Failed executing DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2024-01-10 13:27:45.908 +01:00 [ERR] Failed executing DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ProjectMember] (
+    [Id] uniqueidentifier NOT NULL,
+    [ProjectId] uniqueidentifier NOT NULL,
+    [WorkspaceMemberId] uniqueidentifier NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ProjectMember] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ProjectMember_Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [Project] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ProjectMember_WorkspaceMember_WorkspaceMemberId] FOREIGN KEY ([WorkspaceMemberId]) REFERENCES [WorkspaceMember] ([Id]) ON DELETE CASCADE
+);
+2024-01-10 13:33:13.612 +01:00 [ERR] Failed executing DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ProjectMember] (
+    [Id] uniqueidentifier NOT NULL,
+    [ProjectId] uniqueidentifier NOT NULL,
+    [WorkspaceMemberId] uniqueidentifier NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ProjectMember] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ProjectMember_Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [Project] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ProjectMember_WorkspaceMember_WorkspaceMemberId] FOREIGN KEY ([WorkspaceMemberId]) REFERENCES [WorkspaceMember] ([Id]) ON DELETE CASCADE
+);
+2024-01-10 13:35:08.291 +01:00 [ERR] Failed executing DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ProjectMember] (
+    [Id] uniqueidentifier NOT NULL,
+    [ProjectId] uniqueidentifier NOT NULL,
+    [WorkspaceMemberId] uniqueidentifier NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NOT NULL,
+    CONSTRAINT [PK_ProjectMember] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ProjectMember_Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [Project] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ProjectMember_WorkspaceMember_WorkspaceMemberId] FOREIGN KEY ([WorkspaceMemberId]) REFERENCES [WorkspaceMember] ([Id]) ON DELETE CASCADE
+);
+2024-01-10 13:58:20.094 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:58:34.913 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 13:58:35.061 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:16:32.890 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:16:32.924 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:16:33.120 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:16:33.126 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:17:48.688 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:17:48.729 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:17:48.890 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:17:48.897 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:25:30.701 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:25:30.744 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:25:30.906 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:25:30.913 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:26:54.295 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:26:54.328 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:26:54.470 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:26:54.476 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:34:31.013 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:34:31.051 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:34:31.264 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:34:31.280 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:53:02.498 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:53:02.527 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:53:02.645 +01:00 [WRN] The foreign key property 'Workspace.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2024-01-10 14:53:02.652 +01:00 [WRN] The foreign key property 'WorkspaceMember.ApplicationUserId1' was created in shadow state because a conflicting property with the simple name 'ApplicationUserId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
