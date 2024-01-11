@@ -37,6 +37,7 @@ builder.Services.AddDbContext<TaskFlowDbContext>(options =>
 // Inject Repositories
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IWorkspaceRepository, WorskpaceRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Inject services
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();

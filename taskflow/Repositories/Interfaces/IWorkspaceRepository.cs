@@ -7,8 +7,8 @@ namespace taskflow.Repositories.Interfaces
         public Task<Workspace> CreateAsync(Workspace workspace);
         public Task<Workspace> ShowAsync(Guid id);
         public Task<ICollection<Workspace>> FindAllAsync();
-        public Task<Workspace> Update(Workspace workspace, Guid id);
-        public Task<bool> Delete(Guid id);
+        public Task<Workspace> UpdateAsync(Guid id, Workspace workspace);
+        public Task<Workspace> Delete(Guid id);
     }
 }
 
