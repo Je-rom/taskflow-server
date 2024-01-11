@@ -8,7 +8,7 @@ using taskflow.Data;
 using taskflow.Mappings;
 using taskflow.Middlewares;
 using taskflow.Models.Domain;
-using taskflow.Repositories.Impls;
+using taskflow.Repositories.Implementations;
 using taskflow.Repositories.Interfaces;
 using taskflow.Services.Impls;
 using taskflow.Services.Interfaces;
@@ -34,9 +34,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TaskFlowDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
 
-
 // Inject Repositories
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IWorkspaceRepository, WorskpaceRepository>();
 
 // Inject services
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();

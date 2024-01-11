@@ -110,7 +110,7 @@ namespace taskflow.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             // FInd the user by email
-            var user = await userManager.FindByEmailAsync(loginRequestDto.Email);
+            var user = await userManager.FindByNameAsync(loginRequestDto.Username);
 
             // Verify user email or password
             if (user == null || !await userManager.CheckPasswordAsync(user, loginRequestDto.Password))
@@ -118,10 +118,10 @@ namespace taskflow.Controllers
                 return Unauthorized(ApiResponse.AuthenticationException("Invalid email or password"));
             }
 
-            if (!await userManager.IsEmailConfirmedAsync(user))
+            /*if (!await userManager.IsEmailConfirmedAsync(user))
             {
                 return BadRequest(ApiResponse.AuthorizationException("Email not confirmed"));
-            }
+            }*/
             
             var loginResponseDto = new LoginResponseDto
             {

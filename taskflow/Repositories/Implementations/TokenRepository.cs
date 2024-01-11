@@ -5,21 +5,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using taskflow.Repositories.Interfaces;
 
-namespace taskflow.Repositories.Impls
+namespace taskflow.Repositories.Implementations
 {
     public class TokenRepository(IConfiguration configuration) : ITokenRepository
     {
         public string CreateJwtToken(IdentityUser user)
         {
-            // Create claims
             var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
-            
-            // Add roles to claims
-            /*foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }*/
+            claims.Add(new Claim(ClaimTypes.Email, user.UserName));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -28,10 +21,10 @@ namespace taskflow.Repositories.Impls
                 configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(45),
+                expires: DateTime.Now.AddMinutes(15),
                 signingCredentials: credentials
             );
-            return new JwtSecurityTokenHandler().WriteToken(token);;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

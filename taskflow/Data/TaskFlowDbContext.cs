@@ -7,18 +7,15 @@ namespace taskflow.Data
 {
     public class TaskFlowDbContext : IdentityDbContext<User>
     {
-
         public TaskFlowDbContext(DbContextOptions<TaskFlowDbContext> dbContextOptions) : base(dbContextOptions) {}
         
-        /*public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Workspace> Workspaces { get; set; }*/
-        /*public DbSet<Project> Projects { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Workspace> Workspaces { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
         public DbSet<ProjectTask> ProjectTasks { get; set; }
-        public DbSet<Workspace> Workspaces { get; set; }
-        public DbSet<WorkspaceMember> WorkspaceMembers { get; set; }*/
+        public DbSet<WorkspaceMember> WorkspaceMembers { get; set; }
         
-
         /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
