@@ -16,7 +16,8 @@ namespace taskflow.Repositories.Implementations
 
         public async Task<Workspace> ShowAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Workspaces
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<ICollection<Workspace>> FindAllAsync()
@@ -24,14 +25,40 @@ namespace taskflow.Repositories.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<Workspace> Update(Workspace workspace, Guid id)
+        public Task<Workspace> Update(Guid id, Workspace workspace)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<Workspace> UpdateAsync(Guid id, Workspace workspace)
         {
-            throw new NotImplementedException();
+            var existingWorkspace = await dbContext.Workspaces
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existingWorkspace == null)
+            {
+                return null;
+            }
+
+            existingWorkspace.Name = workspace.Name;
+            existingWorkspace.Description = workspace.Description;
+
+            await dbContext.SaveChangesAsync();
+            return existingWorkspace;
+        }
+
+        public async Task<Workspace> Delete(Guid id)
+        {
+            var workspaceDeleteById = await dbContext.Workspaces.FirstOrDefaultAsync(x => x.Id == id);
+            if ( workspaceDeleteById == null)
+            {
+                return null;
+            }
+
+            dbContext.Workspaces.Remove(workspaceDeleteById);
+            await dbContext.SaveChangesAsync();
+
+            return workspaceDeleteById;
         }
     }
 }

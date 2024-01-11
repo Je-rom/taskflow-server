@@ -9,6 +9,7 @@ using taskflow.Models.Domain;
 using taskflow.Models.DTO.Request;
 using taskflow.Models.DTO.Response;
 using taskflow.Models.DTO.Response.Shared;
+using taskflow.Repositories.Implementations;
 using taskflow.Repositories.Interfaces;
 
 namespace taskflow.Controllers
@@ -17,7 +18,7 @@ namespace taskflow.Controllers
     [ApiController]
     public class WorkspacesController(
         IWorkspaceRepository workspaceRepository,
-        TaskFlowDbContext taskFlowDbContext,
+        IUserRepository userRepository,
         IMapper mapper, ILogger<WorkspacesController> logger
         ) : ControllerBase
     {
@@ -29,7 +30,7 @@ namespace taskflow.Controllers
         {
             // Get the authenticated user's ID
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            var user = await taskFlowDbContext.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+            var user = await userRepository.findByEmail(userEmail);
             if (user == null)
                 return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
             
@@ -39,17 +40,76 @@ namespace taskflow.Controllers
                 Name = requestDto.Name,
                 Description = requestDto.Description,
             };
-
             workspaceModel.User = user;
-           
             
             //2. Save the model using the repository class
-            var modelResponse = await workspaceRepository.CreateAsync(workspaceModel);
+            await workspaceRepository.CreateAsync(workspaceModel);
             
             // 3. Convert the model response back to response DTo
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
         }
-        
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll()
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+            
+            // Fetch the data with the repo
+            var workspaces = user.Workspaces;
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceResponseDto>>(workspaces)));
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Show([FromRoute] Guid id)
+        {
+            var workspaceModel = await workspaceRepository.ShowAsync(id);
+            if (workspaceModel == null)
+            {
+                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
+            }
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
+        }
+
+
+        [HttpPut]
+        [Authorize]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> Put([FromRoute] Guid id,[FromBody] UpdateWorkspaceRequestDTO requestDto)
+        {
+            var workspaceDomain = new Workspace
+            {
+                Name = requestDto.Name,
+                Description = requestDto.Description
+            };
+            var workspaceModel = await workspaceRepository.UpdateAsync(id, workspaceDomain);
+            
+            if(workspaceModel == null)
+                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
+                
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
+            
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id )
+        {
+            var workspaceDomain = await workspaceRepository.Delete(id);
+            
+            if(workspaceDomain == null)
+                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
+
+            return Ok(ApiResponse.SuccessMessage("Workspace deleted"));
+        }
         
     }
 }
