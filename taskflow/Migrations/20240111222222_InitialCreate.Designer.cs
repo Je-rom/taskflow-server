@@ -12,15 +12,15 @@ using taskflow.Data;
 namespace taskflow.Migrations
 {
     [DbContext(typeof(TaskFlowDbContext))]
-    [Migration("20240111100809_ResourcesModel")]
-    partial class ResourcesModel
+    [Migration("20240111222222_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
