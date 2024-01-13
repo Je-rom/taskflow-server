@@ -7,6 +7,8 @@ namespace taskflow.Repositories.Implementations
 {
     public class WorskpaceRepository(TaskFlowDbContext dbContext) : IWorkspaceRepository
     {
+        public Guid UserId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public async Task<Workspace> CreateAsync(Workspace workspace)
         { 
             await dbContext.Workspaces.AddAsync(workspace);
@@ -16,7 +18,7 @@ namespace taskflow.Repositories.Implementations
 
         public async Task<Workspace> ShowAsync(Guid id)
         {
-            return await dbContext.Workspaces
+            return await dbContext.Workspaces.Include("User")
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -60,6 +62,8 @@ namespace taskflow.Repositories.Implementations
 
             return workspaceDeleteById;
         }
+
+       
     }
 }
 

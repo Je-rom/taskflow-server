@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
-namespace taskflow.Models.DTO.Request
+namespace taskflow.Models.DTO
 {
-    public class ProjectRequestDto
+    public class CreateProjectRequestDto
     {
         [Required] 
         public string Name {get; set;}
 
 
-         [Required]
+        [Required]
         [DataType(DataType.Text)]
         [MaxLength(500, ErrorMessage = "Only Max of 500 characters is allowed")]
         public string Description {get; set;} 
