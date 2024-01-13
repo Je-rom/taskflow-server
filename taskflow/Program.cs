@@ -16,6 +16,19 @@ using taskflow.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST", "PATCH", "PUT", "DELETE")
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials();
+        });
+});
+builder.Services.AddEndpointsApiExplorer();
 
 // Inject Serilog for error Logging
 var logger = new LoggerConfiguration()
@@ -79,14 +92,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException()))
         });
 
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
+
 
 // Inject global exception handler
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseAuthorization();
+app.UseAuthentication();
+app.UseCors();
 
 app.MapControllers();
 
