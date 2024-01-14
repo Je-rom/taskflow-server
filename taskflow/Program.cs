@@ -101,9 +101,10 @@ var app = builder.Build();
 
 // Inject global exception handler
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseMiddleware<GlobalJsonRequestFormatRequirementMiddleware>();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 app.UseCors();
 
 app.MapControllers();

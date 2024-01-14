@@ -7,7 +7,9 @@ public class ResetPasswordRequestDto
 {
     
     [Required]
-    public string UserId { set; get; }
+    [EmailAddress]
+    [DataType(DataType.EmailAddress)]
+    public string Username { get; set; }
     
     [Required]
     public string Token { set; get; }

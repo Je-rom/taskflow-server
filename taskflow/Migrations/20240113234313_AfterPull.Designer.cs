@@ -12,15 +12,15 @@ using taskflow.Data;
 namespace taskflow.Migrations
 {
     [DbContext(typeof(TaskFlowDbContext))]
-    [Migration("20240113105529_ResourcesUpdate2")]
-    partial class ResourcesUpdate2
+    [Migration("20240113234313_AfterPull")]
+    partial class AfterPull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -170,27 +170,22 @@ namespace taskflow.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<Guid?>("WorkspaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("WorkspaceId");
 
@@ -453,10 +448,6 @@ namespace taskflow.Migrations
 
             modelBuilder.Entity("taskflow.Models.Domain.Project", b =>
                 {
-                    b.HasOne("taskflow.Models.Domain.User", null)
-                        .WithMany("Project")
-                        .HasForeignKey("UserId");
-
                     b.HasOne("taskflow.Models.Domain.Workspace", "Workspace")
                         .WithMany("Projects")
                         .HasForeignKey("WorkspaceId");
@@ -542,8 +533,6 @@ namespace taskflow.Migrations
 
             modelBuilder.Entity("taskflow.Models.Domain.User", b =>
                 {
-                    b.Navigation("Project");
-
                     b.Navigation("ProjectMembers");
 
                     b.Navigation("WorkspaceMembers");

@@ -18,16 +18,20 @@ namespace taskflow.Repositories.Implementations
 
         public async Task<Workspace> ShowAsync(Guid id)
         {
-            return await dbContext.Workspaces.Include("User")
+            return await dbContext.Workspaces
+                .Include("User")
+                .Include("Projects")
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<ICollection<Workspace>> FindAllAsync()
+        public async Task<Workspace> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Workspaces
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<Workspace> Update(Guid id, Workspace workspace)
+        
+        public Task<ICollection<Workspace>> FindAllAsync()
         {
             throw new NotImplementedException();
         }

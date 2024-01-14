@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace taskflow.Models.DTO.Request
 {
-    public class CreateProjectRequestDto
+    public class UpdateProjectRequestDto
     {
         [Required(ErrorMessage = "Name is required")]
         [StringLength(255, ErrorMessage = "Only a maximum of 255 characters is allowed")]
