@@ -13,6 +13,14 @@ namespace taskflow.Repositories.Implementations
                 .Include("Workspaces")
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
+        
+        public async Task<User> findByEmailDetailed(string email)
+        {
+            return await dbContext.Users
+               // .Include("Workspaces")
+                /*.Include("Workspaces.Projects")*/
+                .FirstOrDefaultAsync(x => x.Email == email);
+        }
     }
 }
 

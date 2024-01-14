@@ -1,4 +1,6 @@
-﻿namespace taskflow.Models.DTO.Response;
+﻿using taskflow.Models.Domain;
+
+namespace taskflow.Models.DTO.Response;
 
 public class ApplicationUserDto
 {
@@ -13,6 +15,8 @@ public class ApplicationUserDto
     public string UserName { get; set; }
     
     public string EmailConfirmed { get; set; }
+    
+    public ICollection<Workspace> Workspaces { get; set; }
     
     public DateTime CreatedAt { get; set; }
 

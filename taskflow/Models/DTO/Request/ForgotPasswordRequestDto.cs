@@ -8,6 +8,6 @@ public class ForgotPasswordRequestDto
     [Required]
     [EmailAddress]
     [DataType(DataType.EmailAddress)]
-    public string Email { get; set; }
+    public string Username { get; set; }
     
 }
