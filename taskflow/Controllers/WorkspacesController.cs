@@ -32,7 +32,7 @@ namespace taskflow.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var user = await userRepository.findByEmail(userEmail);
             if (user == null)
-                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+                return Unauthorized(ApiResponse.NotFoundException($"Invalid user"));
             
             //1.  Create a new instance of the model from the DTO
             var workspaceModel = new Workspace
@@ -69,11 +69,13 @@ namespace taskflow.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Show([FromRoute] Guid id)
         {
+            
             var workspaceModel = await workspaceRepository.ShowAsync(id);
             if (workspaceModel == null)
             {
                 return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
             }
+            
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
         }
 

@@ -167,27 +167,22 @@ namespace taskflow.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<Guid?>("WorkspaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("WorkspaceId");
 
@@ -450,10 +445,6 @@ namespace taskflow.Migrations
 
             modelBuilder.Entity("taskflow.Models.Domain.Project", b =>
                 {
-                    b.HasOne("taskflow.Models.Domain.User", null)
-                        .WithMany("Project")
-                        .HasForeignKey("UserId");
-
                     b.HasOne("taskflow.Models.Domain.Workspace", "Workspace")
                         .WithMany("Projects")
                         .HasForeignKey("WorkspaceId");
@@ -539,8 +530,6 @@ namespace taskflow.Migrations
 
             modelBuilder.Entity("taskflow.Models.Domain.User", b =>
                 {
-                    b.Navigation("Project");
-
                     b.Navigation("ProjectMembers");
 
                     b.Navigation("WorkspaceMembers");

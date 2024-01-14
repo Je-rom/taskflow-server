@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using taskflow.Repositories.Interfaces;
 using taskflow.Data;
 using taskflow.Models.Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace taskflow.Repositories.Implementations
@@ -14,57 +13,47 @@ namespace taskflow.Repositories.Implementations
     {
         public async Task<Project> CreateAsync(Project project)
         {
-            var createProject = await dbContext.Projects.AddAsync(project);
+            await dbContext.Projects.AddAsync(project);
             await dbContext.SaveChangesAsync();
             return project;       
         }
-        public async Task<Project> Delete(Guid id)
-        {
-            var DeleteProjectById = await dbContext.Projects.FirstOrDefaultAsync(x => x.Id == id);
-            {
-                if (DeleteProjectById is null)
-                {
-                    return null;
-                }
 
-                dbContext.Projects.Remove(DeleteProjectById);
-                await dbContext.SaveChangesAsync();
-                return DeleteProjectById;
-            }     
+        public async Task<Project> ShowAsync(Workspace workspace, Guid id)
+        {
+            var project = await dbContext.Projects
+                .FirstOrDefaultAsync(p => p.Id == id && p.Workspace.Id == workspace.Id);
+
+            return project;
         }
 
-        public Task<ICollection<Project>> FindAllAsync()
-        {     
-            throw new NotImplementedException();
-        }
-
-        public async Task<Project> ShowAsync(Guid id)
+        public async Task<Project> UpdateAsync(Workspace workspace, Guid id, Project project)
         {
-            var showId = await dbContext.Projects.FirstOrDefaultAsync(x => x.Id == id);
-            if(showId != null)
-            {
-                return showId;
-            }
-            else
-            {
+            var updateProject = await dbContext.Projects
+                .FirstOrDefaultAsync(p => p.Id == id && p.Workspace.Id == workspace.Id);
+            if (updateProject == null)
                 return null;
-            }  
-        }
-
-        public async Task<Project> UpdateAsync(Guid id, Project project)
-        {
-            var updateProject = await dbContext.Projects.FirstOrDefaultAsync(x => x.Id == id);
-            if (updateProject is null)
-            {
-                return null;
-            }
+            
             updateProject.Name = project.Name;
             updateProject.Description = project.Description;
+            updateProject.StartDate = project.StartDate;
+            updateProject.EndDate = project.EndDate;
 
-           await dbContext.SaveChangesAsync();
-
-           return updateProject;
-            
+            await dbContext.SaveChangesAsync();
+            return updateProject;
         }
+        
+        public async Task<Project> DeleteAsync(Workspace workspace, Guid id)
+        {
+            var project = await dbContext.Projects
+                .FirstOrDefaultAsync(p => p.Id == id && p.Workspace.Id == workspace.Id);
+            if (project == null)
+                return null;
+
+            dbContext.Projects.Remove(project);
+            await dbContext.SaveChangesAsync();
+            return project;
+        }     
+
     }
+    
 }

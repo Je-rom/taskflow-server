@@ -9,10 +9,9 @@ namespace taskflow.Repositories.Interfaces
     public interface IProjectRepository
     {
         public Task<Project> CreateAsync(Project project);
-        public Task<Project> ShowAsync(Guid id);
-        public Task<ICollection<Project>> FindAllAsync();
-        public Task<Project> UpdateAsync(Guid id, Project project );
-        public Task<Project> Delete(Guid id);
+        public Task<Project> ShowAsync(Workspace workspace, Guid id);
+        public Task<Project> UpdateAsync(Workspace workspace, Guid id, Project project);
+        public Task<Project> DeleteAsync(Workspace workspace, Guid id);
         
     }
 }
