@@ -1,67 +1,42 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using taskflow.Data;
 using taskflow.Models.Domain;
 using taskflow.Repositories.Interfaces;
 
 namespace taskflow.Repositories.Implementations
 {
-    public class WorskpaceMemberRepository(TaskFlowDbContext dbContext) : IWorkspaceMemberRepository
+    public class WorkspaceMemberRepository(TaskFlowDbContext dbContext) : IWorkspaceMemberRepository
     {
         public async Task<WorkspaceMember> CreateAsync(WorkspaceMember workspaceMember)
         {
-            await dbContext.WorkspacesMember.AddAsync(workspace);
+            await dbContext.WorkspaceMembers.AddAsync(workspaceMember);
             await dbContext.SaveChangesAsync();
             return workspaceMember;
         }
 
-        public async Task<WorkspaceMember> ShowAsync(Guid Id)
+        public async Task<WorkspaceMember> ShowAsync(Workspace workspace, Guid id)
         {
-            return await dbContext.WorkspacesMember
-                .FirstOrDefaultAsync(x => x.workspaceId == Id);
+            return await dbContext.WorkspaceMembers
+                .FirstOrDefaultAsync(x => x.Workspace.Id == id);
         }
 
-        public Task<ICollection<Workspace>> FindAllAsync()
+        public Task<ICollection<Workspace>> FindAllAsync(Workspace workspace)
         {
             throw new NotImplementedException();
         }
-
-        public Task<Workspace> Update(Guid id, Workspace workspace)
+    
+        public async Task<WorkspaceMember> DeleteAsync(Workspace workspace, Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Workspace> UpdateAsync(Guid id, Workspace workspace)
-        {
-            var existingWorkspaceMember = await dbContext.WorkspacesMember
-                .FirstOrDefaultAsync(x => x.workspaceId == Id);
-
-            if (existingWorkspaceMember == workspace)
+            var workspaceMember = await this.ShowAsync(workspace, id);
+            if (workspaceMember == null)
             {
-                return workspace;
+                return null;
             }
 
-            existingWorkspaceMember.Name = workspace.Name;
-            existingWorkspace.Description = workspace.Description;
-
-            await dbContext.SaveChangesAsync();
-            return existingWorkspace;
-        }
-
-        public async Task<WorkspaceMember> Delete(Guid workspaceId)
-        {
-            var workspaceMemeberDeleteByworkspaceId = await dbContext.Workspaces.FirstOrDefaultAsync(x => x.Id == id);
-            if (workspaceMemberDeleteByWorkspaceId == workspace)
-            {
-                return workspace;
-            }
-
-            dbContext.WorkspaceMember.Remove(workspacMemberDeleteByWorkspaceId);
+            dbContext.WorkspaceMembers.Remove(workspaceMember);
             await dbContext.SaveChangesAsync();
 
-            return workspaceMemberDeleteByWorkspaceId;
+            return workspaceMember;
         }
     }
 }

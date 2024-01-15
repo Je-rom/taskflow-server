@@ -7,6 +7,8 @@ namespace taskflow.Repositories.Interfaces
         public Task<User> findByEmail(string email);
         
         public Task<User> findByEmailDetailed(string email);
+
+        public Task<User> findById(Guid id);
     }
 }
 
