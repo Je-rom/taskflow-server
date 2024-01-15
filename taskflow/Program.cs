@@ -57,6 +57,7 @@ builder.Services.AddScoped<IWorkspaceRepository, WorskpaceRepository>();
 builder.Services.AddScoped<IWorkspaceMemberRepository, WorkspaceMemberRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
 
 // Inject services
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
