@@ -481,3 +481,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+*.obj
+*.bin
