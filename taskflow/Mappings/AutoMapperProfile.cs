@@ -8,8 +8,10 @@ namespace taskflow.Mappings
     {
         public AutoMapperProfiles()
         {
-            CreateMap<User, ApplicationUserDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Workspace, WorkspaceResponseDto>().ReverseMap();
+            CreateMap<Project, ProjectResponseDto>().ReverseMap();
+            CreateMap<WorkspaceMember, WorkspaceMemberResponseDto>().ReverseMap();
         }
     }
 }

@@ -2,12 +2,13 @@
 
 namespace taskflow.Models.DTO.Response
 {
-    public class LoginResponseDto
+    public class WorkspaceMemberResponseDto
     {
-        public required string  JwtToken { get; set; }
+        public Guid Id { get; set; }
+        
+        public DateTime CreatedAt { get; set; }
         
         public UserDto User { get; set; }
         
     }
 }
-

@@ -19,6 +19,7 @@ namespace taskflow.Controllers
     public class WorkspacesController(
         IWorkspaceRepository workspaceRepository,
         IUserRepository userRepository,
+        IWorkspaceMemberRepository workspaceMemberRepository,
         IMapper mapper, ILogger<WorkspacesController> logger
         ) : ControllerBase
     {
@@ -32,7 +33,7 @@ namespace taskflow.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var user = await userRepository.findByEmail(userEmail);
             if (user == null)
-                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+                return Unauthorized(ApiResponse.NotFoundException($"Invalid user"));
             
             //1.  Create a new instance of the model from the DTO
             var workspaceModel = new Workspace
@@ -44,6 +45,14 @@ namespace taskflow.Controllers
             
             //2. Save the model using the repository class
             await workspaceRepository.CreateAsync(workspaceModel);
+            
+            // Add the loggedIn user as a member of the workspace
+            //1.  Create a new instance of the model from the DTO
+            var workspaceMemberModel = new WorkspaceMember();
+            workspaceMemberModel.User = user;
+            workspaceMemberModel.Workspace = workspaceModel;
+            // Save the workspace member data.
+            await workspaceMemberRepository.CreateAsync(workspaceMemberModel);
             
             // 3. Convert the model response back to response DTo
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
@@ -69,11 +78,13 @@ namespace taskflow.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Show([FromRoute] Guid id)
         {
+            
             var workspaceModel = await workspaceRepository.ShowAsync(id);
             if (workspaceModel == null)
             {
                 return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
             }
+            
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
         }
 
