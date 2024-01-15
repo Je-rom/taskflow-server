@@ -1,4 +1,5 @@
 using System.Text;
+using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,10 @@ using taskflow.Repositories.Implementations;
 using taskflow.Repositories.Interfaces;
 using taskflow.Services.Impls;
 using taskflow.Services.Interfaces;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Azure.Security.KeyVault.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,9 +48,29 @@ builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 
-// Inject TaskFlowDbContext into the app
-builder.Services.AddDbContext<TaskFlowDbContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
+// Inject TaskFlowDbContext into the app - production
+if (builder.Environment.IsProduction())
+{
+    var keyVaultURL = builder.Configuration.GetSection("KeyVault: KeyVaultURL");
+
+    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback));
+
+    builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!, new DefaultKeyVaultSecretManager());
+
+    var client = new SecretClient(new Uri(keyVaultURL.Value!), new DefaultAzureCredential());
+
+    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+    {
+        options.UseSqlServer(client.GetSecret("ConnectionStrings--TaskFlowConnectionString").Value.Value);
+    });
+}
+
+// Inject TaskFlowDbContext into the app - local
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
+}
 
 // Inject Repositories
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
@@ -103,6 +128,7 @@ app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
 app.UseCors();
 
 app.MapControllers();
