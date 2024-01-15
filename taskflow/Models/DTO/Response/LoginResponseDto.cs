@@ -6,7 +6,7 @@ namespace taskflow.Models.DTO.Response
     {
         public required string  JwtToken { get; set; }
         
-        public ApplicationUserDto User { get; set; }
+        public UserDto User { get; set; }
         
     }
 }

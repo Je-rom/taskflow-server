@@ -13,9 +13,9 @@ public class User : IdentityUser
 
     // Navigation properties
     public ICollection<Workspace> Workspaces { get; set; }
-   // public ICollection<WorkspaceMember> WorkspaceMembers { get; set; }
+    public ICollection<WorkspaceMember> WorkspaceMembers { get; set; }
     public ICollection<ProjectMember> ProjectMembers { get; set; }
-     //public ICollection<Project> Project { get; set; }
+    //public ICollection<Project> Project { get; set; }
 
     // Constructor to set default values
     public User()
