@@ -14,6 +14,13 @@ namespace taskflow.Repositories.Implementations
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
         
+        public Task<User> findById(Guid id)
+        {
+            var userIdString = id.ToString();
+            return dbContext.Users
+                .FirstOrDefaultAsync(x => x.Id == userIdString);
+        }
+        
         public async Task<User> findByEmailDetailed(string email)
         {
             return await dbContext.Users
