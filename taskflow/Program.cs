@@ -49,28 +49,7 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddControllers();
 
 // Inject TaskFlowDbContext into the app - production
-if (builder.Environment.IsProduction())
-{
-    var keyVaultURL = builder.Configuration.GetSection("KeyVault: KeyVaultURL");
 
-    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback));
-
-    builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!, new DefaultKeyVaultSecretManager());
-
-    var client = new SecretClient(new Uri(keyVaultURL.Value!), new DefaultAzureCredential());
-
-    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
-    {
-        options.UseSqlServer(client.GetSecret("ConnectionStrings--TaskFlowConnectionString").Value.Value);
-    });
-}
-
-// Inject TaskFlowDbContext into the app - local
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
-}
 
 // Inject Repositories
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
@@ -118,6 +97,29 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException()))
         });
+
+if (builder.Environment.IsProduction())
+{
+    var keyVaultURL = builder.Configuration.GetSection("KeyVault: KeyVaultURL");
+
+    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback));
+
+    builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!, new DefaultKeyVaultSecretManager());
+
+    var client = new SecretClient(new Uri(keyVaultURL.Value!), new DefaultAzureCredential());
+
+    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+    {
+        options.UseSqlServer(client.GetSecret("ConnectionStrings--TaskFlowConnectionString").Value.Value);
+    });
+}
+
+// Inject TaskFlowDbContext into the app - local
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("TaskFlowConnectionString")));
+}
 
 
 builder.Services.AddEndpointsApiExplorer();
