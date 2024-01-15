@@ -88,7 +88,7 @@ namespace taskflow.Controllers
             var result = await userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ApplicationUserDto>(user)));   
+                return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<UserDto>(user)));   
             }
 
             return BadRequest(ApiResponse.GenericException(result.Errors));
@@ -143,7 +143,7 @@ namespace taskflow.Controllers
             var loginResponseDto = new LoginResponseDto
             {
                 JwtToken = repository.CreateJwtToken(user),
-                User = mapper.Map<ApplicationUserDto>(user)
+                User = mapper.Map<UserDto>(user)
             };
                         
             return Ok(ApiResponse.SuccessMessageWithData(loginResponseDto));
@@ -205,8 +205,8 @@ namespace taskflow.Controllers
             if (user == null)
                 return Unauthorized(ApiResponse.NotFoundException($"Invalid user"));
 
-            var userDto = mapper.Map<ApplicationUserDto>(user);
-            userDto.Workspaces = user.Workspaces;
+            var userDto = mapper.Map<UserDto>(user);
+            //userDto.Workspaces = user.Workspaces;
             
             // Return the user data as response.
             return Ok(ApiResponse.SuccessMessageWithData(userDto));

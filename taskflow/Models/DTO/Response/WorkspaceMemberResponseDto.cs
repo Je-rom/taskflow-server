@@ -8,7 +8,7 @@ namespace taskflow.Models.DTO.Response
         
         public DateTime CreatedAt { get; set; }
         
-        //public virtual User User { get; set; }
+        public UserDto User { get; set; }
         
     }
 }

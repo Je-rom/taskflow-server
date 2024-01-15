@@ -2,7 +2,7 @@
 
 namespace taskflow.Models.DTO.Response;
 
-public class ApplicationUserDto
+public class UserDto
 {
     public Guid Id { get; set; }
    
@@ -16,7 +16,7 @@ public class ApplicationUserDto
     
     public string EmailConfirmed { get; set; }
     
-    public ICollection<Workspace> Workspaces { get; set; }
+    //public ICollection<Workspace> Workspaces { get; set; }
     
     public DateTime CreatedAt { get; set; }
 
