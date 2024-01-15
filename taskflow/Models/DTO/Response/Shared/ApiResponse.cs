@@ -1,4 +1,6 @@
-﻿namespace taskflow.Models.DTO.Response.Shared
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace taskflow.Models.DTO.Response.Shared
 {
     public class ApiResponse
     {
@@ -81,6 +83,16 @@
             {
                 Status = Status.AUTHORIZATION_ERROR,
                 Message = message
+            };
+        }
+        
+        public static object NewAuthorizationException(object message)
+        {
+            return new ContentResult
+            {
+                StatusCode = 403,
+                Content = "Permission Denied: You do not have permission to access this resource.",
+                ContentType = "text/plain",
             };
         }
         

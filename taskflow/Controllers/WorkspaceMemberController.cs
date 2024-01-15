@@ -38,6 +38,10 @@ namespace taskflow.Controllers //
             if (workspace == null ||workspace.User?.Email != userEmail)
                 return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
 
+            // Check if the user is permitted to perform this operation
+            if (workspace.User == null || workspace.User?.Id != user.Id)
+                return Unauthorized(ApiResponse.AuthorizationException("Permission denied"));
+            
             var convertUserIdStringToGuid = Guid.TryParse(requestDto.UserId, out Guid resultGuid);
             if (!convertUserIdStringToGuid)
                 return BadRequest(ApiResponse.ConflictException($"Badly formatted UserId: {requestDto.UserId}"));
@@ -48,7 +52,7 @@ namespace taskflow.Controllers //
                 return NotFound(ApiResponse.NotFoundException($"User not found with the Id: {requestDto.UserId}"));
             
             // Check if the user to added already exists as a member
-            var checkIfUserIsAlreadyMember = await workspaceMemberRepository.ShowAsync(workspace, resultGuid);
+            var checkIfUserIsAlreadyMember = await workspaceMemberRepository.FindByUserIdAsync(workspace, resultGuid);
             if (checkIfUserIsAlreadyMember != null)
                 return BadRequest(ApiResponse.ConflictException($"User with the ID:{resultGuid} is already a member of the workspace"));
             
@@ -56,82 +60,95 @@ namespace taskflow.Controllers //
             var workspaceMemberModel = new WorkspaceMember();
             workspaceMemberModel.User = userToBeAdded;
             workspaceMemberModel.Workspace = workspace;
-            
-            // Chekck if the user is already a member of the workspace
-            
 
             //2. Save the model using the repository class
             await workspaceMemberRepository.CreateAsync(workspaceMemberModel);
-
-            var dto = mapper.Map<WorkspaceMemberResponseDto>(workspaceMemberModel);
-
+            
             // 3. Convert the model response back to response DTo
-            return Ok(ApiResponse.SuccessMessageWithData(dto));
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceMemberResponseDto>(workspaceMemberModel)));
         }
 
-        /*[HttpGet]
+        [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromRoute] Guid workspaceId)
         {
+            // Get the authenticated user's ID
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-
             var user = await userRepository.findByEmail(userEmail);
             if (user == null)
                 return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+            
+            // Check if the workspace belongs to the user (you might have a different logic for this)
+            var workspace = await workspaceRepository.ShowAsync(workspaceId);
+            if (workspace == null ||workspace.User?.Email != userEmail)
+                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+            
+            var dto = await workspaceMemberRepository.FindAllAsync(workspace);
 
-            // Fetch the data with the repo
-            var workspaces = user.Workspaces;
-            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceResponseDto>>(workspaces)));
-        }*/
-
-        /*[HttpGet]
-        [Authorize]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> Show([FromRoute] Guid id)
-        {
-            var workspaceMemberModel = await workspaceMemberRepository.ShowAsync(id);
-            if (workspaceModel == null)
-            {
-                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
-            }
-            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
-        }*/
-
-
-        /*
-        [HttpPut]
-        [Authorize]
-        [Route("{id:Guid}")]
-
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateWorkspaceMemberRequestDTO requestDto)
-        {
-            var workspaceMemberDomain = new WorkspaceMember
-            {
-                Name = requestDto.Name,
-                WorkspaceId = requestDto.WorkspaceId
-            };
-            var workspaceModel = await workspaceRepository.UpdateAsync(id, workspaceDomain);
-
-            if (workspaceMemberModel == workspaceId)
-                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
-
-            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
-
+            // 3. Convert the model response back to response DTo
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceMemberResponseDto>>(dto)));
         }
-        */
 
-        /*[HttpDelete]
+        [HttpGet]
         [Authorize]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public async Task<IActionResult> Show([FromRoute] Guid workspaceId, [FromRoute] Guid id)
         {
-            var workspaceMemberDomain = await workspaceMemberRepository.Delete(id);
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+            
+            // Check if the workspace belongs to the user (you might have a different logic for this)
+            var workspace = await workspaceRepository.ShowAsync(workspaceId);
+            if (workspace == null ||workspace.User?.Email != userEmail)
+                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+            
+            // Check if the user to added already exists as a member
+            var workspaceMember = await workspaceMemberRepository.FindByUserIdAsync(workspace, id);
+            if (workspaceMember == null)
+                return BadRequest(ApiResponse.ConflictException($"User with the ID:{id} is not a member of the workspace"));
+            
+            //  Convert the model response back to response DTo
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceMemberResponseDto>(workspaceMember)));
+        }
 
-            if (workspaceMemberDomain == null)
-                return NotFound(ApiResponse.NotFoundException($"Workspace with the id: {id} not found"));
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid workspaceId, [FromRoute] Guid id)
+        {
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+            
+            // Check if the workspace belongs to the user (you might have a different logic for this)
+            var workspace = await workspaceRepository.ShowAsync(workspaceId);
+            if (workspace == null ||workspace.User?.Email != userEmail)
+                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+            
+            // Check if the user is permitted to perform this operation
+            if (workspace.User == null || workspace.User.Id != user.Id)
+                return Unauthorized(ApiResponse.AuthorizationException("Permission denied"));
+            
+            // Check if the user to added already exists as a member
+            var workspaceMember = await workspaceMemberRepository.FindByUserIdAsync(workspace, id);
+            if (workspaceMember == null)
+                return BadRequest(ApiResponse.ConflictException($"User with the ID:{id} is not a member of the workspace"));
+            
+            // check if the workspace member is the admin of the workspace
+            if (workspaceMember.User?.Id == user.Id)
+                return BadRequest(ApiResponse.ConflictException("And admin of a workspace cannot be detached"));
+            
+            var deletedWorkspaceMember = await workspaceMemberRepository.DeleteAsync(workspace, id);
+            if (deletedWorkspaceMember == null)
+                return BadRequest(ApiResponse.ConflictException($"User with the ID:{id} is not a member of the workspace"));
 
-            return Ok(ApiResponse.SuccessMessage("Workspace deleted"));
-        }*/
+            return Ok(ApiResponse.SuccessMessage("User detached from the workspace."));
+        }
 
     }
 }
