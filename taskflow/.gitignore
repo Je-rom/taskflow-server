@@ -9,6 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.bin
+*.obj
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -64,6 +67,9 @@ artifacts/
 
 # Tye
 .tye/
+
+appsettings.Development.json
+appsettings.json
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt

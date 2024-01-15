@@ -12,15 +12,15 @@ using taskflow.Data;
 namespace taskflow.Migrations
 {
     [DbContext(typeof(TaskFlowDbContext))]
-    [Migration("20240111100809_ResourcesModel")]
-    partial class ResourcesModel
+    [Migration("20240113234313_AfterPull")]
+    partial class AfterPull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -170,19 +170,19 @@ namespace taskflow.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("WorkspaceId")
+                    b.Property<Guid?>("WorkspaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -450,9 +450,7 @@ namespace taskflow.Migrations
                 {
                     b.HasOne("taskflow.Models.Domain.Workspace", "Workspace")
                         .WithMany("Projects")
-                        .HasForeignKey("WorkspaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkspaceId");
 
                     b.Navigation("Workspace");
                 });

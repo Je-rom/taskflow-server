@@ -20,6 +20,16 @@
             };
         }
         
+        /*public static object Collection(List<object> data)
+        {
+            return new
+            {
+                Status = Status.SUCCESS,
+                Result = data.Length,
+                Data = data
+            };
+        }*/
+        
         public static object Failure(string status, object message)
         {
             return new

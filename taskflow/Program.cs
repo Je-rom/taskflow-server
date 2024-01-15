@@ -16,6 +16,19 @@ using taskflow.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .WithMethods("GET", "POST", "PATCH", "PUT", "DELETE")
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials();
+        });
+});
+builder.Services.AddEndpointsApiExplorer();
 
 // Inject Serilog for error Logging
 var logger = new LoggerConfiguration()
@@ -38,6 +51,7 @@ builder.Services.AddDbContext<TaskFlowDbContext>(options =>
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IWorkspaceRepository, WorskpaceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 // Inject services
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
@@ -79,14 +93,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException()))
         });
 
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+
 // Inject global exception handler
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseMiddleware<GlobalJsonRequestFormatRequirementMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
 
