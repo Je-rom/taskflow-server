@@ -20,19 +20,28 @@ namespace taskflow.Repositories.Implementations
                 .FirstOrDefaultAsync(x => x.Workspace.Id == id);
         }
 
-        public Task<ICollection<Workspace>> FindAllAsync(Workspace workspace)
+        public async Task<WorkspaceMember> FindByUserIdAsync(Workspace workspace, Guid userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.WorkspaceMembers
+                .FirstOrDefaultAsync(x => x.Workspace.Id == workspace.Id && x.User.Id == userId.ToString());
         }
+
+        public async Task<ICollection<WorkspaceMember>> FindAllAsync(Workspace workspace)
+        {
+            return await dbContext.WorkspaceMembers
+                .Where(x => x.Workspace.Id == workspace.Id)
+                .ToListAsync();
+        }
+
     
         public async Task<WorkspaceMember> DeleteAsync(Workspace workspace, Guid id)
         {
-            var workspaceMember = await this.ShowAsync(workspace, id);
+            var workspaceMember = await FindByUserIdAsync(workspace, id);
             if (workspaceMember == null)
             {
                 return null;
             }
-
+            
             dbContext.WorkspaceMembers.Remove(workspaceMember);
             await dbContext.SaveChangesAsync();
 

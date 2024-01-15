@@ -1,9 +1,14 @@
-﻿namespace taskflow.Models.DTO.Response
+﻿using taskflow.Models.Domain;
+
+namespace taskflow.Models.DTO.Response
 {
     public class WorkspaceMemberResponseDto
     {
         public Guid Id { get; set; }
         
         public DateTime CreatedAt { get; set; }
+        
+        //public virtual User User { get; set; }
+        
     }
 }

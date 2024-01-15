@@ -10,7 +10,8 @@ namespace taskflow.Mappings
         {
             CreateMap<User, ApplicationUserDto>().ReverseMap();
             CreateMap<Workspace, WorkspaceResponseDto>().ReverseMap();
-            CreateMap<Project,ProjectResponseDto>().ReverseMap();
+            CreateMap<Project, ProjectResponseDto>().ReverseMap();
+            CreateMap<WorkspaceMember, WorkspaceMemberResponseDto>().ReverseMap();
         }
     }
 }
