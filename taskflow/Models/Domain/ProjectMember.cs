@@ -9,8 +9,8 @@ public class ProjectMember
 
     // Navigation properties
     public Project Project { get; set; }
-    public WorkspaceMember WorkspaceMember { get; set; }
-    public List<ProjectTask> ProjectTasks { get; set; }
+    public User User { get; set; }
+    public ICollection<ProjectTask> ProjectTasks { get; set; }
 
     public ProjectMember()
     {
