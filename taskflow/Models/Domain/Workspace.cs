@@ -11,9 +11,8 @@ public class Workspace
 
     // Navigation properties
     public virtual User User { get; set; }
-    
-    public List<WorkspaceMember> WorkspaceMembers { get; set; }
-    public List<Project> Projects { get; set; }
+    public ICollection<WorkspaceMember> WorkspaceMembers { get; set; }
+    public ICollection<Project> Projects { get; set; }
     
     // Constructor to set default values
     public Workspace()
