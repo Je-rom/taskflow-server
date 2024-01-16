@@ -13,8 +13,8 @@ public class Project
 
     // Navigation properties
     public Workspace Workspace { get; set; }
-    public List<ProjectMember> ProjectMembers { get; set; }
-    public List<ProjectTask> ProjectTasks { get; set; }
+    public ICollection<ProjectMember> ProjectMembers { get; set; }
+    public ICollection<ProjectTask> ProjectTasks { get; set; }
 
      
 

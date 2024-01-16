@@ -12,8 +12,8 @@ using taskflow.Data;
 namespace taskflow.Migrations
 {
     [DbContext(typeof(TaskFlowDbContext))]
-    [Migration("20240113234313_AfterPull")]
-    partial class AfterPull
+    [Migration("20240116105434_ModifiedSchema1")]
+    partial class ModifiedSchema1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,16 +207,11 @@ namespace taskflow.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("WorkspaceMemberId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("WorkspaceMemberId");
 
                     b.ToTable("ProjectMembers");
                 });
@@ -242,7 +237,7 @@ namespace taskflow.Migrations
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProjectMemberId")
+                    b.Property<Guid?>("ProjectMemberId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Stage")
@@ -383,7 +378,7 @@ namespace taskflow.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("WorkspaceId")
+                    b.Property<Guid?>("WorkspaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -463,17 +458,13 @@ namespace taskflow.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("taskflow.Models.Domain.User", null)
+                    b.HasOne("taskflow.Models.Domain.User", "User")
                         .WithMany("ProjectMembers")
                         .HasForeignKey("UserId");
 
-                    b.HasOne("taskflow.Models.Domain.WorkspaceMember", "WorkspaceMember")
-                        .WithMany()
-                        .HasForeignKey("WorkspaceMemberId");
-
                     b.Navigation("Project");
 
-                    b.Navigation("WorkspaceMember");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("taskflow.Models.Domain.ProjectTask", b =>
@@ -484,9 +475,7 @@ namespace taskflow.Migrations
 
                     b.HasOne("taskflow.Models.Domain.ProjectMember", "ProjectMember")
                         .WithMany("ProjectTasks")
-                        .HasForeignKey("ProjectMemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectMemberId");
 
                     b.Navigation("Project");
 
@@ -510,9 +499,7 @@ namespace taskflow.Migrations
 
                     b.HasOne("taskflow.Models.Domain.Workspace", "Workspace")
                         .WithMany("WorkspaceMembers")
-                        .HasForeignKey("WorkspaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkspaceId");
 
                     b.Navigation("User");
 

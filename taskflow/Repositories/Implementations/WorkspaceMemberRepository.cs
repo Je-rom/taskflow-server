@@ -32,15 +32,12 @@ namespace taskflow.Repositories.Implementations
                 .Where(x => x.Workspace.Id == workspace.Id)
                 .ToListAsync();
         }
-
     
         public async Task<WorkspaceMember> DeleteAsync(Workspace workspace, Guid id)
         {
             var workspaceMember = await FindByUserIdAsync(workspace, id);
             if (workspaceMember == null)
-            {
                 return null;
-            }
             
             dbContext.WorkspaceMembers.Remove(workspaceMember);
             await dbContext.SaveChangesAsync();
