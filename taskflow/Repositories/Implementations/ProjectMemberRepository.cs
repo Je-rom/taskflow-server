@@ -17,7 +17,7 @@ public class ProjectMemberRepository(TaskFlowDbContext dbContext) : IProjectMemb
     public async Task<ProjectMember> ShowAsync(Project project, Guid id)
     {
         return await dbContext.ProjectMembers
-            .FirstOrDefaultAsync(x => x.Project.Id == id);
+            .FirstOrDefaultAsync(x => x.Project.Id == project.Id && x.User.Id == id.ToString());
     }
 
     public async Task<ProjectMember> FindByWorkspaceMemberIdAsync(Project project, Guid userId)

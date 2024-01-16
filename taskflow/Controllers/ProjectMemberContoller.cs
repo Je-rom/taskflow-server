@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections;
+using System.Security.Claims;
 using AutoMapper;
 using AutoMapper.Execution;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,7 @@ using taskflow.Models.DTO.Response;
 using taskflow.Models.DTO.Response.Shared;
 using taskflow.Repositories.Implementations;
 using taskflow.Repositories.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace taskflow.Controllers
 {
@@ -29,7 +31,12 @@ namespace taskflow.Controllers
         [ValidateModel]
         public async Task<IActionResult> CreateAsync([FromRoute] Guid projectId, [FromBody] ProjectMemberRequestDto projectMemberrequestDto)
         {
-            // Get the authenticated user's ID
+            if (projectMemberrequestDto.UserId is IList)
+            {
+
+            }
+
+                // Get the authenticated user's ID
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var user = await userRepository.findByEmail(userEmail);
             if (user == null)
@@ -38,7 +45,7 @@ namespace taskflow.Controllers
             // Check if the workspace belongs to the user (you might have a different logic for this)
             var workspace = await workspaceRepository.ShowAsync(projectMemberrequestDto.WorkspaceId);
             if (workspace == null || workspace.User?.Email != userEmail)
-                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+                return BadRequest(ApiResponse.NotFoundException($"Workspace:"));
 
             // Check if the user is permitted to perform this operation
             if (workspace.User == null || workspace.User?.Id != user.Id)
@@ -52,29 +59,45 @@ namespace taskflow.Controllers
                     $"id:[{projectId}], or does not belong to the workspace."));
 
 
-            // Check if workspace member exists
-            var workspaceMembersUserIds = projectMemberrequestDto.UserId;
-            var invalidWorkspaceMemberUserIds = new List<Guid>();
+            // Check if the user ids is a member of the workspace.
+            var userIds = projectMemberrequestDto.UserId;
+            var invalidUserIds = new List<Guid>();
 
-            foreach (var memberUserId in workspaceMembersUserIds)
+            foreach (var userId in userIds)
             {
-
-                // Check if workspace member belongs to the project's workspace
-                var member = await workspaceMemberRepository.FindByUserIdAsync(workspace, memberUserId);
-                if (member != null)
+                // Only someone within the workspace can be added to a project
+                var member = await workspaceMemberRepository.FindByUserIdAsync(workspace, userId);
+                if (member == null)
                 {
-                    invalidWorkspaceMemberUserIds.Add(memberUserId);
+                    invalidUserIds.Add(userId);
                     continue;
                 }
             }
 
-            if (invalidWorkspaceMemberUserIds.Count > 0)
-                return NotFound(ApiResponse.NotFoundException($"Projects found with the " +
-                    $"ids:[{invalidWorkspaceMemberUserIds}] within the workspace."));
+            if (invalidUserIds.Count > 0)
+                return BadRequest(ApiResponse.ConflictException($"Projects found with the " +
+                    $"ids:[{invalidUserIds}] within the workspace."));
 
 
-            // Crate a project member model fron request dto
-            var projectMemberModel = new ProjectMember();
+
+            // Check if the user is already added to the project
+            var existingUserIds = new List<Guid>();
+            foreach (var userId in existingUserIds)
+            {
+                var userExist = await projectMemberRepository.ShowAsync(project, userId);
+                if (userExist == null)
+                {
+                    existingUserIds.Add(userId);
+                    continue;
+                }
+            }
+            if (existingUserIds.Count > 0)
+                return BadRequest(ApiResponse.ConflictException($"User with ids: [{existingUserIds}] exists within the workspace"));
+
+
+
+                // Crate a project member model fron request dto
+                var projectMemberModel = new ProjectMember();
             projectMemberModel.Project = project;
             projectMemberModel.User = user;
 
