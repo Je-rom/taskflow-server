@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace taskflow.Migrations
 {
     /// <inheritdoc />
-    public partial class AfterPull : Migration
+    public partial class ModifiedSchema1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -210,9 +210,9 @@ namespace taskflow.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WorkspaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    WorkspaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -226,8 +226,7 @@ namespace taskflow.Migrations
                         name: "FK_WorkspaceMembers_Workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
                         principalTable: "Workspaces",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +236,6 @@ namespace taskflow.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WorkspaceMemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -254,11 +252,6 @@ namespace taskflow.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProjectMembers_WorkspaceMembers_WorkspaceMemberId",
-                        column: x => x.WorkspaceMemberId,
-                        principalTable: "WorkspaceMembers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -271,10 +264,10 @@ namespace taskflow.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Stage = table.Column<int>(type: "int", nullable: false),
-                    ProjectMemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectMemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,8 +276,7 @@ namespace taskflow.Migrations
                         name: "FK_ProjectTasks_ProjectMembers_ProjectMemberId",
                         column: x => x.ProjectMemberId,
                         principalTable: "ProjectMembers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProjectTasks_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -342,11 +334,6 @@ namespace taskflow.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectMembers_WorkspaceMemberId",
-                table: "ProjectMembers",
-                column: "WorkspaceMemberId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_WorkspaceId",
                 table: "Projects",
                 column: "WorkspaceId");
@@ -399,6 +386,9 @@ namespace taskflow.Migrations
                 name: "ProjectTasks");
 
             migrationBuilder.DropTable(
+                name: "WorkspaceMembers");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -406,9 +396,6 @@ namespace taskflow.Migrations
 
             migrationBuilder.DropTable(
                 name: "Projects");
-
-            migrationBuilder.DropTable(
-                name: "WorkspaceMembers");
 
             migrationBuilder.DropTable(
                 name: "Workspaces");
