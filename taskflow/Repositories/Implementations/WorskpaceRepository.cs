@@ -16,9 +16,9 @@ namespace taskflow.Repositories.Implementations
             return workspace;
         }
 
-        public async Task<Workspace> ShowAsync(Guid id)
+        public Task<Workspace> ShowAsync(Guid id)
         {
-            return await dbContext.Workspaces
+            return dbContext.Workspaces
                 .Include("User")
                 .Include("Projects")
                 .FirstOrDefaultAsync(x => x.Id == id);
