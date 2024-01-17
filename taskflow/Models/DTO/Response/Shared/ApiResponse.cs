@@ -2,14 +2,14 @@
 
 namespace taskflow.Models.DTO.Response.Shared
 {
-    public class ApiResponse
+    public static class ApiResponse
     {
         public static object SuccessMessage(string message)
         {
             return new
             {
-                Status = Status.SUCCESS,
-                Message = message
+                status = Status.SUCCESS,
+                message
             };
         }
         
@@ -17,8 +17,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.SUCCESS,
-                Data = data
+                status = Status.SUCCESS,
+                data
             };
         }
         
@@ -36,8 +36,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = status,
-                Message = message
+                status,
+                message
             };
         }
         
@@ -45,8 +45,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.UNKNOWN_ERROR,
-                Message = message
+                status = Status.UNKNOWN_ERROR,
+                message
             };
         }
         
@@ -54,8 +54,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.NOT_FOUND_ERROR,
-                Message = message
+                status = Status.NOT_FOUND_ERROR,
+                message
             };
         }
         
@@ -63,8 +63,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.ERROR,
-                Message = message
+                status = Status.ERROR,
+                message
             };
         }
         
@@ -72,8 +72,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.CONFLICT_ERROR,
-                Message = message
+                status = Status.CONFLICT_ERROR,
+                message
             };
         }
         
@@ -81,8 +81,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.AUTHORIZATION_ERROR,
-                Message = message
+                status = Status.AUTHORIZATION_ERROR,
+                message
             };
         }
         
@@ -100,8 +100,8 @@ namespace taskflow.Models.DTO.Response.Shared
         {
             return new
             {
-                Status = Status.AUTHENTICATION_ERROR,
-                Message = message
+                status = Status.AUTHENTICATION_ERROR,
+                message
             };
         }
     }
