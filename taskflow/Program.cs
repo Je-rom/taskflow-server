@@ -101,18 +101,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 if (builder.Environment.IsProduction())
 {
-    var keyVaultURL = builder.Configuration.GetSection("KeyVault: KeyVaultURL");
-
-    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback));
-
-    builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!, new DefaultKeyVaultSecretManager());
-
-    var client = new SecretClient(new Uri(keyVaultURL.Value!), new DefaultAzureCredential());
-
-    builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+    try
     {
-        options.UseSqlServer(client.GetSecret("ConnectionStrings--TaskFlowConnectionString").Value.Value);
-    });
+        var keyVaultURL = builder.Configuration.GetSection("KeyVault: KeyVaultURL");
+
+        var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback));
+
+        builder.Configuration.AddAzureKeyVault(keyVaultURL.Value!, new DefaultKeyVaultSecretManager());
+
+        var client = new SecretClient(new Uri(keyVaultURL.Value!), new DefaultAzureCredential());
+
+        builder.Services.AddDbContext<TaskFlowDbContext>(options =>
+        {
+            options.UseSqlServer(client.GetSecret("ConnectionStrings--TaskFlowConnectionString").Value.Value);
+        });
+    }
+    catch (Exception ex)
+    {
+        logger.Error(ex.ToString());
+    }
 }
 
 // Inject TaskFlowDbContext into the app - local
