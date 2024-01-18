@@ -36,7 +36,8 @@ namespace taskflow.Controllers //
             // Check if the workspace belongs to the user (you might have a different logic for this)
             var workspace = await workspaceRepository.ShowAsync(workspaceId);
             if (workspace == null ||workspace.User?.Email != userEmail)
-                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+                return NotFound(ApiResponse
+                    .NotFoundException($"Workspace with id: {workspaceId} is either not found or does not belong to the user"));
 
             // Check if the user is permitted to perform this operation
             if (workspace.User == null || workspace.User?.Id != user.Id)
@@ -81,12 +82,12 @@ namespace taskflow.Controllers //
             // Check if the workspace belongs to the user (you might have a different logic for this)
             var workspace = await workspaceRepository.ShowAsync(workspaceId);
             if (workspace == null ||workspace.User?.Email != userEmail)
-                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace.Id}"));
+                return NotFound(ApiResponse.NotFoundException($"Workspace: {workspace?.Id}"));
             
-            var dto = await workspaceMemberRepository.FindAllAsync(workspace);
+            var model = await workspaceMemberRepository.FindAllAsync(workspace);
 
             // 3. Convert the model response back to response DTo
-            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceMemberResponseDto>>(dto)));
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceMemberResponseDto>>(model)));
         }
 
         [HttpGet]

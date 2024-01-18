@@ -12,8 +12,8 @@ using taskflow.Data;
 namespace taskflow.Migrations
 {
     [DbContext(typeof(TaskFlowDbContext))]
-    [Migration("20240116105434_ModifiedSchema1")]
-    partial class ModifiedSchema1
+    [Migration("20240117192905_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,7 +201,7 @@ namespace taskflow.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
@@ -454,9 +454,7 @@ namespace taskflow.Migrations
                 {
                     b.HasOne("taskflow.Models.Domain.Project", "Project")
                         .WithMany("ProjectMembers")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("taskflow.Models.Domain.User", "User")
                         .WithMany("ProjectMembers")

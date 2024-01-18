@@ -31,8 +31,10 @@ namespace taskflow.Controllers
        [HttpPost]
        [Authorize]
        [ValidateModel]
-        public async Task<IActionResult> Create([FromRoute] Guid workspaceId, [FromBody] CreateProjectRequestDto projectRequestDto)
-        {
+        public async Task<IActionResult> Create(
+            [FromRoute] Guid workspaceId, 
+            [FromBody] CreateProjectRequestDto projectRequestDto
+            ){
                 var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
                 var user = await userRepository.findByEmail(userEmail);
                 if (user == null)
@@ -43,7 +45,8 @@ namespace taskflow.Controllers
 
                 if (workspace == null ||workspace.User?.Email != userEmail)
                 {
-                    return NotFound(ApiResponse.NotFoundException($"Workspace not found with the id: {workspaceId}, or does not belong to the user"));
+                    return NotFound(ApiResponse
+                        .NotFoundException($"Workspace not found with the id: {workspaceId}, or does not belong to the user"));
                 }
 
                 // Create a new instance of the model from the Dto
@@ -77,7 +80,8 @@ namespace taskflow.Controllers
             var workspace = await workspaceRepository.ShowAsync(workspaceId);
 
             if (workspace == null ||workspace.User?.Email != userEmail)
-                return NotFound(ApiResponse.NotFoundException($"Workspace not found with the id: {workspaceId}, or does not belong to the user"));
+                return NotFound(ApiResponse.NotFoundException($"Workspace not found with the id: {workspaceId}, " +
+                                                              $"or does not belong to the user"));
 
             var projects = workspace.Projects;
             
@@ -100,13 +104,15 @@ namespace taskflow.Controllers
             var workspace = await workspaceRepository.ShowAsync(workspaceId);
 
             if (workspace == null ||workspace.User?.Email != userEmail)
-                return NotFound(ApiResponse.NotFoundException($"Workspace not found with the id: {workspaceId}, or does not belong to the user"));
+                return NotFound(ApiResponse
+                    .NotFoundException($"Workspace not found with the id: {workspaceId}, or does not belong to the user"));
 
             var project = await projectRepository.ShowAsync(workspace, id);
             
             // Check if the project does not exist, or not exist within  the workspace
             if (project == null)
-                return NotFound(ApiResponse.NotFoundException($"Project not found with thw Id: {id}, or does not belong to the context workspace"));
+                return NotFound(ApiResponse
+                    .NotFoundException($"Project not found with thw Id: {id}, or does not belong to the context workspace"));
             
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ProjectResponseDto>(project)));
         }
