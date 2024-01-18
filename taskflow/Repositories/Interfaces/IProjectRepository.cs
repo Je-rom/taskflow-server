@@ -10,6 +10,7 @@ namespace taskflow.Repositories.Interfaces
     {
         public Task<Project> CreateAsync(Project project);
         public Task<Project> ShowAsync(Workspace workspace, Guid id);
+        public Task<Project> FindById(Guid id);
         public Task<Project> UpdateAsync(Workspace workspace, Guid id, Project project);
         public Task<Project> DeleteAsync(Workspace workspace, Guid id);
     }

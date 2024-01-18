@@ -130,18 +130,113 @@ namespace taskflow.Controllers
             }
             
             // Fetch the list of members of the projects
+            var members = await projectMemberRepository.FindAllAsync(project);
             
-            // Send the response back to user containing the created model.
-            return Ok(ApiResponse.SuccessMessage("Member(s) added to the project"));
+            // Send the response back to user containing the created models.
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<ProjectMemberResponseDto>>(members)));
         }
         
         
         // Fetch all project members
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromRoute] Guid projectId)
+        {
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));     
+            
+            // check if the project exists
+            var project = await projectRepository.FindById(projectId);
+            if (project == null)
+                return NotFound(ApiResponse.NotFoundException($"Project not found with the " +
+                                                              $"id:[{projectId}]"));
+            
+            var workspace = await workspaceRepository.ShowAsync(project.Workspace.Id);
+            
+            // Check if the user is already added to the project or the owner of thew workspace.
+            var userExist = await projectMemberRepository.ShowAsync(project, Guid.Parse(user.Id));
+            if ((userExist == null) && workspace.User?.Email != userEmail)
+                return Unauthorized(ApiResponse.AuthorizationException("The current user is not a member of the project"));
+            
+            // fetch the project members
+            var members = await projectMemberRepository.FindAllAsync(project);
+            
+            // Send the response back to user containing the data list.
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<ProjectMemberResponseDto>>(members)));
+        }
+        
         
         // Show project members
+        [HttpGet]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Show([FromRoute] Guid projectId, [FromRoute] Guid id)
+        {
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));     
+            
+            // check if the project exists
+            var project = await projectRepository.FindById(projectId);
+            if (project == null)
+                return NotFound(ApiResponse.NotFoundException($"Project not found with the " +
+                                                              $"id:[{projectId}]"));
+            
+            var workspace = await workspaceRepository.ShowAsync(project.Workspace.Id);
+            
+            // Check if the user is already added to the project or the owner of thew workspace.
+            var userExist = await projectMemberRepository.ShowAsync(project, Guid.Parse(user.Id));
+            if ((userExist == null) && workspace.User?.Email != userEmail)
+                return Unauthorized(ApiResponse.AuthorizationException("The current user is not a member of the project"));
+
+            
+            // fetch the project members
+            var member = await projectMemberRepository.ShowAsync(project, id);
+            
+            // Send the response back to user containing the created model.
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ProjectMemberResponseDto>(member)));
+        }
         
         // Detach project member
-        
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid projectId, [FromRoute] Guid id)
+        {
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+
+            // check if the project exists
+            var project = await projectRepository.FindById(projectId);
+            if (project == null)
+                return NotFound(ApiResponse.NotFoundException($"Project not found with the " +
+                                                              $"id:[{projectId}]"));
+
+            // Fetch the workspace from the DB
+            var workspace = await workspaceRepository.ShowAsync(project.Workspace.Id);
+
+            // Check if the current user is the admin of the workspace
+            if (workspace.User?.Email != userEmail)
+                return Unauthorized(
+                    ApiResponse.AuthorizationException("Only and Admin of workspace can remove project"));
+
+              // Check if the user is already added to the project
+            var deletedMember = await projectMemberRepository.DeleteAsync(project, id);
+            if (deletedMember == null)
+                return NotFound(ApiResponse
+                    .NotFoundException($"Project member(user) not found with the id: {id}"));
+
+            return Ok(ApiResponse.SuccessMessage("Member detached."));
+        }
+
     }
 
 }
