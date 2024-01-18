@@ -8,40 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b272e7c3-a3b8-484a-909e-ba4a716d4871" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/server.metadata.v7.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/server.projects.v7.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/VSWorkspaceState.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/server/DesignTimeBuild/.dtbcache.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/server/config/applicationhost.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/server/v17/.futdcache.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/server/v17/.suo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/server/v17/DocumentLayout.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/slnx.sqlite" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/taskflow-server/FileContentIndex/6a8ce684-bfef-4010-9c87-3a3da2f78101.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/taskflow-server/FileContentIndex/70bcaa98-6249-46b9-be20-43d42b1823a9.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/taskflow-server/v17/.wsuo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/taskflow-server/v17/DocumentLayout.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240115104116_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240115104116_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240116105434_ModifiedSchema1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240116105434_ModifiedSchema1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240116111329_ModifiedSchema.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/20240116111329_ModifiedSchema.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Migrations/TaskFlowDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectMemberRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectMemberRequestDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/Shared/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/Shared/ApiResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/taskflow.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/taskflow.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IProjectRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IProjectRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +38,7 @@
     ".NET Launch Settings Profile.taskflow: http.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "steve-backend",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -110,7 +81,7 @@
       <option name="presentableId" value="Default" />
       <updated>1705519473652</updated>
       <workItem from="1705519491448" duration="884000" />
-      <workItem from="1705522190605" duration="9184000" />
+      <workItem from="1705522190605" duration="12277000" />
     </task>
     <servers />
   </component>

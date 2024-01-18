@@ -25,6 +25,14 @@ namespace taskflow.Repositories.Implementations
 
             return project;
         }
+        
+        public async Task<Project> FindById(Guid id)
+        {
+            var project = await dbContext.Projects
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            return project;
+        }
 
         public async Task<Project> UpdateAsync(Workspace workspace, Guid id, Project project)
         {
