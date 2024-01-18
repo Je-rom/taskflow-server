@@ -54,6 +54,15 @@ namespace taskflow.Controllers
             // Save the workspace member data.
             await workspaceMemberRepository.CreateAsync(workspaceMemberModel);
             
+            // Create other workspace members
+            var memberIds = requestDto.Members;
+            foreach (var memberId in memberIds)
+            {
+                // validate the memberId
+                
+                
+            }
+            
             // 3. Convert the model response back to response DTo
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceResponseDto>(workspaceModel)));
         }
