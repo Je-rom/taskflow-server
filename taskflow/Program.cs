@@ -60,6 +60,7 @@ builder.Services.AddScoped<IWorkspaceMemberRepository, WorkspaceMemberRepository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
+builder.Services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
 
 // Inject services
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
@@ -129,7 +130,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 context.HandleResponse();
                 context.Response.StatusCode = 401;
                 context.Response.ContentType = "application/json";
-                context.Response.WriteAsync(JsonConvert.SerializeObject(ApiResponse.AuthenticationException("You need an authentication token to access this route")));
+                context.Response.WriteAsync(JsonConvert.SerializeObject(
+                    ApiResponse.AuthenticationException("You need an authentication token to access this route")));
                 return Task.CompletedTask;
             }
         };
