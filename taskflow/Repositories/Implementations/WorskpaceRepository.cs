@@ -19,10 +19,14 @@ namespace taskflow.Repositories.Implementations
         public Task<Workspace> ShowAsync(Guid id)
         {
             return dbContext.Workspaces
-                .Include("User")
-                .Include("Projects")
+                .Include(w => w.User)
+                .Include(w => w.Projects)
+                .Include(w => w.WorkspaceMembers)
+                .ThenInclude(wm => wm.User)  // Add a
+                //.ThenInclude(p => p.SomeRelatedEntity)  
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
+
 
         public async Task<Workspace> FindByIdAsync(Guid id)
         {
@@ -31,9 +35,15 @@ namespace taskflow.Repositories.Implementations
         }
 
         
-        public Task<ICollection<Workspace>> FindAllAsync()
+        public async Task<ICollection<Workspace>> FindAllAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await dbContext.Workspaces
+                .Include(w => w.User)
+                .Include(w => w.Projects)
+                .Include(w => w.WorkspaceMembers)
+                .ThenInclude(wm => wm.User)  // Add a
+                .Where(x => x.User.Id == userId.ToString())
+                .ToListAsync();
         }
 
         public async Task<Workspace> UpdateAsync(Guid id, Workspace workspace)
