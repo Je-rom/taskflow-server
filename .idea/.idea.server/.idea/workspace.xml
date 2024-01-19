@@ -7,15 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/WorkspacesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/WorkspacesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Data/TaskFlowDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Data/TaskFlowDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceResponseDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorkspaceMemberRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorkspaceMemberRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IWorkspaceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IWorkspaceRepository.cs" afterDir="false" />
-    </list>
+    <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1705648718279</updated>
-      <workItem from="1705648722888" duration="6827000" />
+      <workItem from="1705648722888" duration="7217000" />
     </task>
     <servers />
   </component>
