@@ -89,7 +89,7 @@ namespace taskflow.Controllers
                 return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
             
             // Fetch the data with the repo
-            var workspaces = user.Workspaces;
+            var workspaces = await workspaceRepository.FindAllAsync(Guid.Parse(user.Id));
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceResponseDto>>(workspaces)));
         }
 
