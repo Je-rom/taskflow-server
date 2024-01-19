@@ -61,8 +61,14 @@ namespace taskflow.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Auth", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
 
                 emailService.SendEmailAsync(user.Email, "Confirm Email",  callbackUrl);
-                
-                return Ok(ApiResponse.SuccessMessage(callbackUrl));
+
+                var result = await userManager.ConfirmEmailAsync(user, token);
+                if (result.Succeeded)
+                {
+                    return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<UserDto>(user)));
+                }
+
+                return BadRequest(ApiResponse.GenericException(result.Errors));
             }
 
             return BadRequest(ApiResponse.UnknownException("Something went wrong, try again"));
