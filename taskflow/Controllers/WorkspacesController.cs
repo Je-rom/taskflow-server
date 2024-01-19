@@ -55,11 +55,22 @@ namespace taskflow.Controllers
             await workspaceMemberRepository.CreateAsync(workspaceMemberModel);
             
             // Create other workspace members
-            var memberIds = requestDto.Members;
-            foreach (var memberId in memberIds)
+            var memberEmails = requestDto.Members;
+            foreach (var memberEmail in memberEmails)
             {
-                // validate the memberId
+                // validate the memberEmail
+                var potentialMemberUser = await userRepository.findByEmail(memberEmail);
+                if (potentialMemberUser != null && potentialMemberUser.Email != user.Email)
+                {
+                    var potentialWorkspaceMember = new WorkspaceMember();
+                    potentialWorkspaceMember.User = potentialMemberUser;
+                    potentialWorkspaceMember.Workspace = workspaceModel;   
+                    
+                    // Save the workspace member data.
+                    await workspaceMemberRepository.CreateAsync(potentialWorkspaceMember);
+                }
                 
+                // Logic for users not found within the system
                 
             }
             
@@ -78,7 +89,7 @@ namespace taskflow.Controllers
                 return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
             
             // Fetch the data with the repo
-            var workspaces = user.Workspaces;
+            var workspaces = await workspaceRepository.FindAllAsync(Guid.Parse(user.Id));
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceResponseDto>>(workspaces)));
         }
 

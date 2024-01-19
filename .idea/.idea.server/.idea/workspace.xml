@@ -7,12 +7,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b272e7c3-a3b8-484a-909e-ba4a716d4871" name="Changes" comment="">
+    <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IProjectRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IProjectRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/WorkspacesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/WorkspacesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Data/TaskFlowDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Data/TaskFlowDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorkspaceMemberRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorkspaceMemberRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/WorskpaceRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IWorkspaceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Interfaces/IWorkspaceRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,10 +27,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
-}</component>
-  <component name="ProjectId" id="2b5yw0fpPQyK3Ff101uhFKaKqp0" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2bACuASDlGbE9mdE8Q9uagxLNdn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -49,9 +51,9 @@
   },
   "keyToStringList": {
     "rider.external.source.directories": [
-      "C:\\Users\\Adurotimi Steven\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Adurotimi Steven\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Adurotimi Steven\\AppData\\Local\\Symbols\\src"
+      "C:\\Users\\b-jadurotimi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\b-jadurotimi\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\b-jadurotimi\\AppData\\Local\\Symbols\\src"
     ]
   }
 }]]></component>
@@ -75,13 +77,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b272e7c3-a3b8-484a-909e-ba4a716d4871" name="Changes" comment="" />
-      <created>1705519473652</created>
+      <changelist id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="" />
+      <created>1705648718279</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1705519473652</updated>
-      <workItem from="1705519491448" duration="884000" />
-      <workItem from="1705522190605" duration="12277000" />
+      <updated>1705648718279</updated>
+      <workItem from="1705648722888" duration="6827000" />
     </task>
     <servers />
   </component>
