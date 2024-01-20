@@ -8,11 +8,9 @@ public interface IProjectTaskRepository
 
     public Task<ProjectTask> ShowAsync(Project project, Guid id);
     
-    public Task<ProjectTask> UpdateAsync(Project project, Guid id);
-
-    public Task<ProjectTask> FindByProjectTaskIdAsync(Project project, Guid userId);
+    public Task<ProjectTask> UpdateAsync(Project project, Guid id, ProjectTask projectTask);
     
-    public Task<ICollection<ProjectMember>> FindAllAsync(Project project);
+    public Task<ICollection<ProjectTask>> FindAllAsync(Project project);
     
     public Task<ProjectTask> DeleteAsync(Project project, Guid id);
 

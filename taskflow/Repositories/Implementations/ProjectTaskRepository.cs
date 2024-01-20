@@ -1,40 +1,148 @@
-﻿using taskflow.Models.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using taskflow.Models.Domain;
 using taskflow.Repositories.Interfaces;
+using taskflow.Data;
 
 namespace taskflow.Repositories.Implementations;
 
-public class ProjectTaskRepository : IProjectTaskRepository
+public class ProjectTaskRepository(TaskFlowDbContext dbContext) : IProjectTaskRepository
 {
-    public Task<ProjectTask> CreateAsync(ProjectTask projectTask)
+    public async Task<ProjectTask> CreateAsync(ProjectTask projectTask)
     {
-        throw new NotImplementedException();
+         await dbContext.ProjectTasks.AddAsync(projectTask);
+         await dbContext.SaveChangesAsync();
+         return projectTask;
+
     }
 
-    public Task<ProjectTask> ShowAsync(Project project, Guid id)
+    public async Task<ProjectTask> DeleteAsync(Project project, Guid id)
     {
-        throw new NotImplementedException();
+        var projectTask = await dbContext.ProjectTasks
+                .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
+        if (project == null)
+            return null;
+
+        dbContext.Projects.Remove(project);
+        await dbContext.SaveChangesAsync();
+        return projectTask;
+
+
+
     }
 
-    public Task<ProjectTask> UpdateAsync(Project project, Guid id)
+    public async Task<ICollection<ProjectTask>> FindAllAsync(Project project)
     {
-        throw new NotImplementedException();
-    }
-    
-    
-    
+        return await dbContext.ProjectTasks
+           .Where(x => x.Project.Id == project.Id)
+           .ToListAsync();
 
-    public Task<ProjectTask> FindByProjectTaskIdAsync(Project project, Guid userId)
-    {
-        throw new NotImplementedException();
     }
 
-    public Task<ICollection<ProjectMember>> FindAllAsync(Project project)
+    public async Task<ProjectTask> ShowAsync(Project project, Guid id)
     {
-        throw new NotImplementedException();
+            var projectTask = await dbContext.ProjectTasks
+                     .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
+            if (project == null)
+                return null;
+            return projectTask;
     }
 
-    public Task<ProjectTask> DeleteAsync(Project project, Guid id)
+    public async Task<ProjectTask> UpdateAsync(Project project, Guid id, ProjectTask projectTask)
     {
-        throw new NotImplementedException();
+        var updateTask = await dbContext.ProjectTasks
+                   .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
+        if (updateTask == null)
+            return null;
+        updateTask.Name = projectTask.Name;
+        updateTask.Description = projectTask.Description;
+        updateTask.StartDate = projectTask.StartDate;
+        updateTask.EndDate = projectTask.EndDate;
+
+        await dbContext.SaveChangesAsync();
+        return updateTask;
+
+
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*public async Task<ProjectTask> CreateAsync(ProjectTask projectTask)
+{
+    await dbContext.ProjectTasks.AddAsync(projectTask);
+    await dbContext.SaveChangesAsync();
+    return projectTask
+    }
+
+public async Task<ProjectTask> ShowAsync(ProjectTask projectTask, Guid id)
+{
+    var project await dbContext.ProjectTask
+      .FirstOrDefaultAsync(p => p.Id == id && p.ProjectTask.Id == projectTask.Id);
+
+    return project;
+
+}
+
+public Task<ProjectTask> UpdateAsync(ProjectTask projectTask, Guid id)
+{
+
+
+}
+
+
+public async Task<ProjectTask> FindByProjectTaskIdAsync(Guid id)
+{
+    var projectTask = await dbContext.ProjectTask
+       .FirstOrDefaultAsync(p => p.Id == id);
+
+    return projectTask;
+}
+
+public Task<ICollection<ProjectMember>> FindAllAsync(ProjectTask projectTask)
+{
+    throw new NotImplementedException();
+}
+
+public async Task<ProjectTask> DeleteAsync(ProjectTask projectTask, Guid id)
+{
+    var projectTask = await dbContext.ProjectTask
+       .FirstOrDefaultAsync(p => p.Id == id && p.ProjectTask.Id == projectTask.Id)
+
+           if (projectTask == null)
+        return null;
+    dbContext.ProjectTask.Remove(projectTask);
+    await dbContext.SaveChangesAsync();
+    return projectTask;
+}
+*/
