@@ -18,13 +18,12 @@ public class ProjectTaskRepository(TaskFlowDbContext dbContext) : IProjectTaskRe
     {
         var projectTask = await dbContext.ProjectTasks
                 .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
-        if (project == null)
+        if (projectTask == null)
             return null;
 
-        dbContext.Projects.Remove(project);
+        dbContext.ProjectTasks.Remove(projectTask);
         await dbContext.SaveChangesAsync();
         return projectTask;
-
     }
 
     public async Task<ICollection<ProjectTask>> FindAllAsync(Project project)
@@ -52,12 +51,17 @@ public class ProjectTaskRepository(TaskFlowDbContext dbContext) : IProjectTaskRe
     {
         var updateTask = await dbContext.ProjectTasks
                    .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
+        
         if (updateTask == null)
             return null;
+        
         updateTask.Name = projectTask.Name;
         updateTask.Description = projectTask.Description;
         updateTask.StartDate = projectTask.StartDate;
         updateTask.EndDate = projectTask.EndDate;
+        updateTask.ProjectMember = projectTask.ProjectMember;
+        updateTask.Stage = projectTask.Stage;
+        updateTask.Project = project;
 
         await dbContext.SaveChangesAsync();
         return updateTask;

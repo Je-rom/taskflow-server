@@ -29,9 +29,8 @@ namespace taskflow.Controllers
         [ValidateModel]
         public async Task<IActionResult> CreateAsync(
            [FromRoute] Guid projectId,
-           [FromBody] ProjectTaskRequestDto projectTaskRequestDto
-           )
-        {
+           [FromBody] CreateProjectTaskRequestDto createProjectTaskRequestDto
+           ) {
             // Get the authenticated user's ID
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var user = await userRepository.findByEmail(userEmail);
@@ -50,31 +49,32 @@ namespace taskflow.Controllers
                     .AuthorizationException($"Invalid Operation!"));
             
             // Find the user to be assigned to the project.
-            var assignee = await projectMemberRepository.ShowAsync(project, projectTaskRequestDto.UserId);
+            var assignee = await projectMemberRepository.ShowAsync(project, createProjectTaskRequestDto.UserId);
             if (assignee == null)
                 return NotFound(ApiResponse
                     .NotFoundException(
-                        $"User does not exist with the id: {projectTaskRequestDto.UserId} or has not yet been addes to the project"));
+                        $"User does not exist with the id: {createProjectTaskRequestDto.UserId} or has not yet been addes to the project"));
             
             // Check if the start date is in the future.
-            if (projectTaskRequestDto.StartDate < DateTime.UtcNow)
+            if (createProjectTaskRequestDto.StartDate < DateTime.UtcNow)
                 return BadRequest(ApiResponse.ConflictException("StartDate can only be present or Future"));
             
             // Check if the end date is in the future.
-            if (projectTaskRequestDto.EndDate < DateTime.UtcNow)
+            if (createProjectTaskRequestDto.EndDate < DateTime.UtcNow)
                 return BadRequest(ApiResponse.ConflictException("EndDate can only be present or Future"));
 
             // Check if the start date is less thab EndData.
-            if (projectTaskRequestDto.EndDate < projectTaskRequestDto.StartDate)
+            if (createProjectTaskRequestDto.EndDate < createProjectTaskRequestDto.StartDate)
                 return BadRequest(ApiResponse.ConflictException("StartDate cannot be greater that future date"));
             
             // Create a new instance of the model from the Dto
             var projectModel = new ProjectTask
             { 
-                Name = projectTaskRequestDto.Name,
-                Description = projectTaskRequestDto.Description,
-                StartDate = projectTaskRequestDto.StartDate,
-                EndDate = projectTaskRequestDto.EndDate,
+                Name = createProjectTaskRequestDto.Name,
+                Description = createProjectTaskRequestDto.Description,
+                StartDate = createProjectTaskRequestDto.StartDate,
+                EndDate = createProjectTaskRequestDto.EndDate,
+                Stage = createProjectTaskRequestDto.Stage,
                 ProjectMember = assignee,
                 Project = project
             };
@@ -145,18 +145,110 @@ namespace taskflow.Controllers
             // fetch the project members
             var task = await projectTaskRepository.ShowAsync(project, id);
             if (task == null)
-                return NotFound(ApiResponse.NotFoundException($""));
+                return NotFound(ApiResponse.NotFoundException($"Task not found with the id: {id}, " +
+                                                              $"or does not belong to the project"));
             
             // Send the response back to user containing the created model.
             return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ProjectTaskResponseDto>(task)));
         }
         
         // Update project task
-        
-        // delete prpject task
-        
+        [HttpPut]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid projectId, [FromRoute] Guid id, UpdateProjectTaskRequestDto requestDto)
+        {
+            
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+
+            // check if the project exists
+            var project = await projectRepository.FindById(projectId);
+            if (project == null)
+                return NotFound(ApiResponse.NotFoundException($"Project not found with the " +
+                    $"id:[{projectId}], or does not belong to the workspace."));
+            
+            // Check if the logged in user owns the workspace
+            if (project.Workspace == null || project.Workspace.User?.Email != userEmail)
+                return Unauthorized(ApiResponse
+                    .AuthorizationException($"Invalid Operation!"));
+            
+            // Find the user to be assigned to the project.
+            var assignee = await projectMemberRepository.ShowAsync(project, requestDto.UserId);
+            if (assignee == null)
+                return NotFound(ApiResponse
+                    .NotFoundException(
+                        $"User does not exist with the id: {requestDto.UserId} or has not yet been addes to the project"));
+            
+            // Check if the start date is in the future.
+            if (requestDto.StartDate < DateTime.UtcNow)
+                return BadRequest(ApiResponse.ConflictException("StartDate can only be present or Future"));
+            
+            // Check if the end date is in the future.
+            if (requestDto.EndDate < DateTime.UtcNow)
+                return BadRequest(ApiResponse.ConflictException("EndDate can only be present or Future"));
+
+            // Check if the start date is less thab EndData.
+            if (requestDto.EndDate < requestDto.StartDate)
+                return BadRequest(ApiResponse.ConflictException("StartDate cannot be greater that future date"));
+            
+            // Create a new instance of the model from the Dto
+            var projectModel = new ProjectTask
+            { 
+                Name = requestDto.Name,
+                Description = requestDto.Description,
+                StartDate = requestDto.StartDate,
+                EndDate = requestDto.EndDate,
+                ProjectMember = assignee,
+                Stage = requestDto.Stage,
+                Project = project
+            };
+
+            
+            var task = await projectTaskRepository.UpdateAsync(project, id, projectModel);
+            if (task == null)
+                return NotFound(ApiResponse.NotFoundException($"Task not found with the id: {id}, " +
+                                                              $"or does not belong to the project"));
+            
+            // Send the response back to user containing the created model.
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ProjectTaskResponseDto>(task)));
+        }
 
         
+        // delete project task
+        [HttpDelete]
+        [Authorize]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid projectId, [FromRoute] Guid id)
+        {
+            // Get the authenticated user's ID
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await userRepository.findByEmail(userEmail);
+            if (user == null)
+                return NotFound(ApiResponse.NotFoundException($"{userEmail}"));
+
+            // check if the project exists
+            var project = await projectRepository.FindById(projectId);
+            if (project == null)
+                return NotFound(ApiResponse.NotFoundException($"Project not found with the " +
+                                                              $"id:[{projectId}], or does not belong to the workspace."));
+            
+            // Check if the logged in user owns the workspace
+            if (project.Workspace == null || project.Workspace.User?.Email != userEmail)
+                return Unauthorized(ApiResponse
+                    .AuthorizationException($"Invalid Operation!"));
+            
+            var task = await projectTaskRepository.DeleteAsync(project, id);
+            if (task == null)
+                return NotFound(ApiResponse.NotFoundException($"Task not found with the id: {id}, " +
+                                                              $"or does not belong to the project"));
+
+            return Ok(ApiResponse.SuccessMessage("Task deleted successfully"));
+        }
+
     }
 
 }

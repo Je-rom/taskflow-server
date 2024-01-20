@@ -16965,7 +16965,7 @@
     <table id="5588" parent="5577" name="ProjectTasks">
       <CreatedTimestamp>2024-01-16.12:54:52.370</CreatedTimestamp>
       <DataRetentionPeriod>-1</DataRetentionPeriod>
-      <ModifiedTimestamp>2024-01-16.12:54:52.393</ModifiedTimestamp>
+      <ModifiedTimestamp>2024-01-20.21:13:34.707</ModifiedTimestamp>
       <ObjectId>983674552</ObjectId>
       <LobDataSpaceId>1</LobDataSpaceId>
     </table>
@@ -17475,8 +17475,7 @@ Name</ColNames>
       <Position>5</Position>
     </column>
     <column id="5677" parent="5588" name="Stage">
-      <DasType>int|0s</DasType>
-      <NotNull>1</NotNull>
+      <DasType>varchar(255 char)|0s</DasType>
       <Position>6</Position>
     </column>
     <column id="5678" parent="5588" name="CreatedAt">
