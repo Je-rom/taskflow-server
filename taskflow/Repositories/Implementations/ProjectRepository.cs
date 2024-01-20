@@ -21,6 +21,9 @@ namespace taskflow.Repositories.Implementations
         public async Task<Project> ShowAsync(Workspace workspace, Guid id)
         {
             var project = await dbContext.Projects
+                .Include(x => x.ProjectTasks)
+                .Include(w => w.ProjectMembers)
+                .ThenInclude(wm => wm.User)  // Add a
                 .FirstOrDefaultAsync(p => p.Id == id && p.Workspace.Id == workspace.Id);
 
             return project;
@@ -29,8 +32,9 @@ namespace taskflow.Repositories.Implementations
         public async Task<Project> FindById(Guid id)
         {
             var project = await dbContext.Projects
+                .Include(w => w.ProjectMembers)
+                .ThenInclude(wm => wm.User)  // Add a
                 .FirstOrDefaultAsync(p => p.Id == id);
-
             return project;
         }
 

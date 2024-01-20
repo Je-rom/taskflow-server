@@ -8,14 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/UpdateProjectTaskRequestDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectTaskController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectTaskController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectTaskRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateProjectTaskRequestDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/ProjectTaskResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/ProjectTaskResponseDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/Domain/ProjectTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/Domain/ProjectTask.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectTaskRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectTaskRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateProjectRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateProjectRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1705648718279</updated>
       <workItem from="1705648722888" duration="7968000" />
-      <workItem from="1705739237415" duration="12395000" />
+      <workItem from="1705739237415" duration="16711000" />
     </task>
     <servers />
   </component>

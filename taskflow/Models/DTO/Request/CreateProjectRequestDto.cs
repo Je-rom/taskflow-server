@@ -21,5 +21,8 @@ namespace taskflow.Models.DTO.Request
         [DataType(DataType.Date, ErrorMessage = "Invalid date format for EndDate. Please use the format yyyy-MM-dd.")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
+        
+        [Required] 
+        public string[]? UserIds { get; set; }
     }
 }
