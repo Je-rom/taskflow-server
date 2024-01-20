@@ -131,7 +131,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 context.Response.StatusCode = 401;
                 context.Response.ContentType = "application/json";
                 context.Response.WriteAsync(JsonConvert.SerializeObject(
-                    ApiResponse.AuthenticationException("You need an authentication token to access this route")));
+                    ApiResponse.AuthenticationException("You need an valid auth token to access this route")));
                 return Task.CompletedTask;
             }
         };
