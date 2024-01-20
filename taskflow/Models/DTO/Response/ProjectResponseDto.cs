@@ -15,6 +15,7 @@ namespace taskflow.Models.DTO.Response
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        
+        public ICollection<ProjectMemberResponseDto> ProjectMembers { get; set; }
+        public ICollection<ProjectTaskResponseDto> ProjectTasks { get; set; }
     }
 }

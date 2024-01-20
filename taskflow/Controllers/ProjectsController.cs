@@ -25,7 +25,9 @@ namespace taskflow.Controllers
         IProjectRepository projectRepository,
         ILogger<WorkspacesController> logger,
         IUserRepository userRepository,
-        IWorkspaceRepository workspaceRepository  
+        IWorkspaceRepository workspaceRepository,
+        IWorkspaceMemberRepository workspaceMemberRepository,
+        IProjectMemberRepository projectMemberRepository
         ) :  ControllerBase {
           
        [HttpPost]
@@ -61,6 +63,56 @@ namespace taskflow.Controllers
                 
                 // Save the model using the repository class
                 await projectRepository.CreateAsync(projectModel);
+                
+                var invalidUserIds = new List<string>();
+                var invalidWorkspaceMemberIds = new List<string>();
+                // Attach users to the project
+                foreach (var userId in projectRequestDto.UserIds)
+                {
+                    // Validate the Guids
+                    var validId = Guid.TryParse(userId, out Guid guidUserId);
+                    if (!validId)
+                    {
+                        invalidUserIds.Add(userId);   
+                        continue;
+                    }
+                    
+                    // Only someone within the workspace can be added to a project
+                    var member = await workspaceMemberRepository.FindByUserIdAsync(workspace, guidUserId);
+                    if (member == null)
+                        invalidWorkspaceMemberIds.Add(userId);
+                    
+                }
+                
+                // Check is invalid Ids were found
+                if (invalidUserIds.Count > 0)
+                    return BadRequest(ApiResponse
+                        .ConflictException($"Invalid ids found in the payload :[{string.Join(", ", invalidUserIds)}]"));
+            
+                // Check if a non member of the workspace is found withing the payload
+                if (invalidWorkspaceMemberIds.Count > 0)
+                    return BadRequest(ApiResponse
+                        .ConflictException($"Non member of the workspace found in the payload :[{string.Join(", ", invalidWorkspaceMemberIds)}]"));
+                
+                foreach (var userId in projectRequestDto.UserIds)
+                {
+                    // Validate the Guids
+                    Guid.TryParse(userId, out Guid guidUserId);
+                    // Fetch the user data
+                    var userToBeAdded = await userRepository.findById(guidUserId);
+
+                    if (userToBeAdded != null)
+                    {
+                        // Crate a project member model fron request dto
+                        var projectMemberModel = new ProjectMember();
+                        projectMemberModel.Project = projectModel;
+                        projectMemberModel.User = userToBeAdded;
+
+                        // Save the model to the db through the repository
+                        await projectMemberRepository.CreateAsync(projectMemberModel);
+                    }
+                    
+                }
   
                 // 3. Convert the model response back to response DTo
                 return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<ProjectResponseDto>(projectModel)));
