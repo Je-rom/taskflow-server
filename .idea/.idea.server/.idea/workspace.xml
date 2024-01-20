@@ -8,30 +8,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/project.packagespec.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/rider.project.restore.info" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/UpdateProjectTaskRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/bin/Debug/net8.0/CoverletSourceRootsMapping_Taskflow_Unit" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/bin/Debug/net8.0/CoverletSourceRootsMapping_Taskflow_Unit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Debug/net8.0/Taskflow_Unit.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Taskflow_Unit.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Taskflow_Unit.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/Taskflow_Unit.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/Taskflow_Unit.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Taskflow_Unit/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Taskflow_Unit/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectMemberContoller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Controllers/ProjectTaskController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/ProjectTaskController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Mappings/AutoMapperProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Mappings/AutoMapperProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectTaskRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectTaskRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/ProjectTaskRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateProjectTaskRequestDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/ProjectTaskResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/ProjectTaskResponseDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceMemberResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Response/WorkspaceMemberResponseDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Models/Domain/ProjectTask.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/Domain/ProjectTask.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectTaskRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Repositories/Implementations/ProjectTaskRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +88,7 @@
       <option name="presentableId" value="Default" />
       <updated>1705648718279</updated>
       <workItem from="1705648722888" duration="7968000" />
-      <workItem from="1705739237415" duration="8986000" />
+      <workItem from="1705739237415" duration="12395000" />
     </task>
     <servers />
   </component>
