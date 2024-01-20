@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj": {}
+    "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj": {}
   },
   "projects": {
-    "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\taskflow.csproj": {
+    "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\taskflow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\taskflow.csproj",
+        "projectUniqueName": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\taskflow.csproj",
         "projectName": "taskflow",
-        "projectPath": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\taskflow.csproj",
-        "packagesPath": "C:\\Users\\b-ooluwatuyi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\obj\\",
+        "projectPath": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\taskflow.csproj",
+        "packagesPath": "C:\\Users\\b-jadurotimi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\b-ooluwatuyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\b-jadurotimi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -140,17 +144,21 @@
         }
       }
     },
-    "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj": {
+    "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj",
+        "projectUniqueName": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj",
         "projectName": "Taskflow_Unit",
-        "projectPath": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj",
-        "packagesPath": "C:\\Users\\b-ooluwatuyi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\Taskflow_Unit\\obj\\",
+        "projectPath": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\Taskflow_Unit\\Taskflow_Unit.csproj",
+        "packagesPath": "C:\\Users\\b-jadurotimi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\Taskflow_Unit\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\b-ooluwatuyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\b-jadurotimi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -164,8 +172,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\taskflow.csproj": {
-                "projectPath": "C:\\Users\\b-ooluwatuyi\\Documents\\Tech\\Taskflow-bankend\\taskflow-server\\taskflow\\taskflow.csproj"
+              "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\taskflow.csproj": {
+                "projectPath": "C:\\Users\\b-jadurotimi\\Documents\\Projects\\taskflow-project\\taskflow-server\\taskflow\\taskflow.csproj"
               }
             }
           }

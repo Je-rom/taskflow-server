@@ -1,4 +1,6 @@
-﻿namespace taskflow.Models.DTO.Response
+﻿using taskflow.Models.Domain;
+
+namespace taskflow.Models.DTO.Response
 {
     public class ProjectTaskResponseDto
     {
@@ -9,5 +11,6 @@
         public DateTime EndDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public ProjectMemberResponseDto ProjectMember { get; set; }
     }
 }
