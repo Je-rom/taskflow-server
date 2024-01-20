@@ -58,9 +58,9 @@ namespace taskflow.Controllers
             {
                 // Generate an email verification token
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = Url.Action("ConfirmEmail", "Auth", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
+               // var callbackUrl = Url.Action("ConfirmEmail", "Auth", new { userId = user.Id, token = token }, protocol: HttpContext.Request.Scheme);
 
-                emailService.SendEmailAsync(user.Email, "Confirm Email",  callbackUrl);
+                //emailService.SendEmailAsync(user.Email, "Confirm Email",  callbackUrl);
 
                 var result = await userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
