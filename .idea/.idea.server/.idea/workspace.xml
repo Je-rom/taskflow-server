@@ -8,10 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e72a9afb-03a4-4bd9-adaf-838c83196ae4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/dataSources/fd04be5b-a593-4ad2-a837-f6b9a26e47fc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taskflow/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Controllers/WorkspaceMemberController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateWorksPaceMemberRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/taskflow/Models/DTO/Request/CreateWorksPaceMemberRequestDto.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1705648718279</updated>
       <workItem from="1705648722888" duration="7968000" />
-      <workItem from="1705739237415" duration="323000" />
+      <workItem from="1705739237415" duration="1214000" />
     </task>
     <servers />
   </component>

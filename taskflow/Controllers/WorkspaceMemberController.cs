@@ -43,30 +43,33 @@ namespace taskflow.Controllers //
             if (workspace.User == null || workspace.User?.Id != user.Id)
                 return Unauthorized(ApiResponse.AuthorizationException("Permission denied"));
             
-            var convertUserIdStringToGuid = Guid.TryParse(requestDto.UserId, out Guid resultGuid);
-            if (!convertUserIdStringToGuid)
-                return BadRequest(ApiResponse.ConflictException($"Badly formatted UserId: {requestDto.UserId}"));
+            // loop through all the emails, and try adding them to the workspace.
+            var memberEmails = requestDto.UserEmails;
+            foreach (var memberEmail in memberEmails)
+            {
+                // validate the memberEmail
+                var potentialMemberUser = await userRepository.findByEmail(memberEmail);
+                if (potentialMemberUser != null)
+                {
+                    // Check if the user to added already exists as a member
+                    var checkIfUserIsAlreadyMember = await workspaceMemberRepository.FindByUserIdAsync(workspace, Guid.Parse(potentialMemberUser.Id));
+                    
+                    if (potentialMemberUser.Email != user.Email && checkIfUserIsAlreadyMember == null)
+                    {
+                        var potentialWorkspaceMember = new WorkspaceMember();
+                        potentialWorkspaceMember.User = potentialMemberUser;
+                        potentialWorkspaceMember.Workspace = workspace;   
+                    
+                        // Save the workspace member data.
+                        await workspaceMemberRepository.CreateAsync(potentialWorkspaceMember);
+                    }
+                }
                 
-            // Fetch user to be Added
-            var userToBeAdded = await userRepository.findById(resultGuid);
-            if (userToBeAdded == null)
-                return NotFound(ApiResponse.NotFoundException($"User not found with the Id: {requestDto.UserId}"));
+            }
             
-            // Check if the user to added already exists as a member
-            var checkIfUserIsAlreadyMember = await workspaceMemberRepository.FindByUserIdAsync(workspace, resultGuid);
-            if (checkIfUserIsAlreadyMember != null)
-                return BadRequest(ApiResponse.ConflictException($"User with the ID:{resultGuid} is already a member of the workspace"));
-            
-            //1.  Create a new instance of the model from the DTO
-            var workspaceMemberModel = new WorkspaceMember();
-            workspaceMemberModel.User = userToBeAdded;
-            workspaceMemberModel.Workspace = workspace;
-
-            //2. Save the model using the repository class
-            await workspaceMemberRepository.CreateAsync(workspaceMemberModel);
-            
+            var model = await workspaceMemberRepository.FindAllAsync(workspace);
             // 3. Convert the model response back to response DTo
-            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<WorkspaceMemberResponseDto>(workspaceMemberModel)));
+            return Ok(ApiResponse.SuccessMessageWithData(mapper.Map<List<WorkspaceMemberResponseDto>>(model)));
         }
 
         [HttpGet]
