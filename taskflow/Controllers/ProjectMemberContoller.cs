@@ -126,7 +126,6 @@ namespace taskflow.Controllers
 
                 // Save the model to the db through the repository
                 await projectMemberRepository.CreateAsync(projectMemberModel);
-
             }
             
             // Fetch the list of members of the projects

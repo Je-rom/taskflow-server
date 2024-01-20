@@ -12,7 +12,6 @@ public class ProjectTaskRepository(TaskFlowDbContext dbContext) : IProjectTaskRe
          await dbContext.ProjectTasks.AddAsync(projectTask);
          await dbContext.SaveChangesAsync();
          return projectTask;
-
     }
 
     public async Task<ProjectTask> DeleteAsync(Project project, Guid id)
@@ -26,22 +25,24 @@ public class ProjectTaskRepository(TaskFlowDbContext dbContext) : IProjectTaskRe
         await dbContext.SaveChangesAsync();
         return projectTask;
 
-
-
     }
 
     public async Task<ICollection<ProjectTask>> FindAllAsync(Project project)
     {
         return await dbContext.ProjectTasks
-           .Where(x => x.Project.Id == project.Id)
-           .ToListAsync();
+            .Include(w => w.ProjectMember)
+            .ThenInclude(wm => wm.User)  // Add a
+            .Where(x => x.Project.Id == project.Id)
+            .ToListAsync();
 
     }
 
     public async Task<ProjectTask> ShowAsync(Project project, Guid id)
     {
             var projectTask = await dbContext.ProjectTasks
-                     .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
+                .Include(w => w.ProjectMember)
+                .ThenInclude(wm => wm.User)  // Add a
+                .FirstOrDefaultAsync(p => p.Id == id && p.Project.Id == project.Id);
             if (project == null)
                 return null;
             return projectTask;
