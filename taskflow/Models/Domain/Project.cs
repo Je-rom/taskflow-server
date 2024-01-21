@@ -16,8 +16,6 @@ public class Project
     public ICollection<ProjectMember> ProjectMembers { get; set; }
     public ICollection<ProjectTask> ProjectTasks { get; set; }
 
-     
-
     public Project()
     {
         CreatedAt = DateTime.UtcNow;

@@ -57,10 +57,15 @@ namespace taskflow.Repositories.Implementations
         public async Task<Project> DeleteAsync(Workspace workspace, Guid id)
         {
             var project = await dbContext.Projects
+                .Include(x => x.ProjectTasks)
+                .Include(w => w.ProjectMembers)
                 .FirstOrDefaultAsync(p => p.Id == id && p.Workspace.Id == workspace.Id);
             if (project == null)
                 return null;
-
+            
+            dbContext.RemoveRange(project.ProjectTasks);
+            dbContext.RemoveRange(project.ProjectMembers);
+            
             dbContext.Projects.Remove(project);
             await dbContext.SaveChangesAsync();
             return project;
