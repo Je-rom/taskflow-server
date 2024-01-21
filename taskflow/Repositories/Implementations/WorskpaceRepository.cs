@@ -65,16 +65,27 @@ namespace taskflow.Repositories.Implementations
 
         public async Task<Workspace> Delete(Guid id)
         {
-            var workspaceDeleteById = await dbContext.Workspaces.FirstOrDefaultAsync(x => x.Id == id);
-            if ( workspaceDeleteById == null)
+            var workspace= await dbContext.Workspaces
+                .Include(w => w.User)
+                .Include(w => w.Projects)
+                .ThenInclude(wm => wm.ProjectMembers)  // Add a
+                .ThenInclude(wm => wm.ProjectTasks)  // Add a
+                .Include(w => w.WorkspaceMembers)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            if ( workspace == null)
             {
                 return null;
             }
+            
+            dbContext.Entry(workspace).State = EntityState.Deleted;
 
-            dbContext.Workspaces.Remove(workspaceDeleteById);
+            /*dbContext.RemoveRange(workspace.Projects);
+            dbContext.RemoveRange(workspace.WorkspaceMembers);
+            
+            dbContext.Workspaces.Remove(workspace);*/
             await dbContext.SaveChangesAsync();
 
-            return workspaceDeleteById;
+            return workspace;
         }
 
        
